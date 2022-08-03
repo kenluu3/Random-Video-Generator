@@ -7,25 +7,23 @@ import dataSource from '../config/data-source';
 const getUsername = async (req: Request, res: Response) => {
   try {
     let { username } = req.params;
-
     username = username.toLowerCase();
 
-    const result = await dataSource
+    const query = await dataSource
       .createQueryBuilder()
       .select('users')
       .from(Users, 'users')
       .where('users.username = :username', {username})
-      .getOne()
+      .getOne();
     
-    if (result == null) {
+    if (query == null) {
       return res.status(400).json(`User ${username} does not exist.`);
     }
 
-    res.status(200).json(result);
+    res.status(200).json({'username': username, 'email': query.email, 'active': query.active});
   } catch (error: any) {
     const { code, detail } = error;
-
-    res.status(400).json({'code': code, 'detail': detail});
+    res.status(500).json({'code': code, 'detail': detail});
   }
 }
 
@@ -39,7 +37,7 @@ const registerUser = async (req: Request, res: Response) => {
 
     password = await bcrypt.hash(password, Number(process.env.SALT));
 
-    const result = await dataSource
+    const query = await dataSource
       .createQueryBuilder()
       .insert()
       .into(Users)
@@ -59,4 +57,32 @@ const registerUser = async (req: Request, res: Response) => {
   }
 }
 
-export { registerUser, getUsername };
+const loginUser = async (req: Request, res: Response) => {
+  try {
+    let { username, password } = req.body;
+    username = username.toLowerCase()
+
+    const query = await dataSource
+      .createQueryBuilder()
+      .select('users')
+      .from(Users, 'users')
+      .where('users.username = :username', {username})
+      .getOne();
+
+    if (query == null) {
+      return res.status(400).json(`Invalid username. The user '${username}' does not exist.`);
+    }
+
+    const validatePass = await bcrypt.compare(password, query.password);
+
+    if (!validatePass) {
+      return res.status(400).json(`Invalid password. Please try again.`);
+    }
+
+    return res.status(200).json(`${username} has successfully logged in.`);
+  } catch (error: any) {
+    res.status(500).json({error});
+  }
+}
+
+export { registerUser, getUsername, loginUser };
