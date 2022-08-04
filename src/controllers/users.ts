@@ -1,9 +1,10 @@
 import { Request, Response } from 'express';
-import bcrypt from 'bcrypt';
 
 import { Users } from '../models/users';
 import dataSource from '../config/data-source';
+
 import * as auth from '../config/auth';
+import bcrypt from 'bcrypt';
 
 const getUsername = async (req: Request, res: Response) => {
   try {
@@ -83,6 +84,7 @@ const loginUser = async (req: Request, res: Response) => {
     const payload = { 
       'id': query.id, 
       'username': query.username, 
+      'email': query.email,
       'active': query.active 
     };
 
