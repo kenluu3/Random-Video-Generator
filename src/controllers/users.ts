@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 
 import { Users } from '../models/users';
 import dataSource from '../config/data-source';
+import * as auth from '../config/auth';
 
 const getUsername = async (req: Request, res: Response) => {
   try {
@@ -16,7 +17,7 @@ const getUsername = async (req: Request, res: Response) => {
       .where('users.username = :username', {username})
       .getOne();
     
-    if (query == null) {
+    if (!query) {
       return res.status(400).json(`User ${username} does not exist.`);
     }
 
@@ -69,7 +70,7 @@ const loginUser = async (req: Request, res: Response) => {
       .where('users.username = :username', {username})
       .getOne();
 
-    if (query == null) {
+    if (!query) {
       return res.status(400).json(`Invalid username. The user '${username}' does not exist.`);
     }
 
@@ -79,9 +80,17 @@ const loginUser = async (req: Request, res: Response) => {
       return res.status(400).json(`Invalid password. Please try again.`);
     }
 
-    return res.status(200).json(`${username} has successfully logged in.`);
+    const payload = { 
+      'id': query.id, 
+      'username': query.username, 
+      'active': query.active 
+    };
+
+    const token = auth.generateJWT(payload, '3h');
+    return res.status(200).json({token});
+
   } catch (error: any) {
-    res.status(500).json({error});
+    res.status(500).json(error);
   }
 }
 
