@@ -9,7 +9,7 @@ const dataSource = new DataSource({
   port: Number(process.env.PGPORT),
   database: process.env.PGDATABASE,
   synchronize: true,
-  entities: [Users]
+  entities: [Users],
 });
 
 dataSource.initialize()
