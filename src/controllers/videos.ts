@@ -5,15 +5,13 @@ const youtube = google.youtube('v3');
 
 const getVideo = async (req: Request, res: Response) => {  
   try {
-    let qstr = req.query.q as string;
+    let qstr = req.query.q as string || '';
     const qarr = qstr.split(',');
 
     const maxQueries = qarr.length;
     if (maxQueries > 0) {
       qstr = qarr[Math.floor(Math.random() * maxQueries)];
-    } else {
-      qstr = '';
-    }
+    } 
 
     const searchParams = {
       auth: process.env.YOUTUBE_API_KEY,
