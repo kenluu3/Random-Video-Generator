@@ -1,5 +1,6 @@
 import { DataSource } from 'typeorm';
 import { Users } from '../models/users';
+import { Favorites } from '../models/favorites';
 
 const dataSource = new DataSource({
   type: 'postgres',
@@ -9,7 +10,7 @@ const dataSource = new DataSource({
   port: Number(process.env.PGPORT),
   database: process.env.PGDATABASE,
   synchronize: true,
-  entities: [Users],
+  entities: [Users, Favorites],
 });
 
 dataSource.initialize()
