@@ -1,11 +1,9 @@
 import { Request } from 'express';
-
 import jsonwebtoken from 'jsonwebtoken';
 import passport from 'passport';
 import passportJWT from 'passport-jwt';
-
 import { Users } from '../models/users';
-import dataSource from '../config/data-source';
+import { dataSource } from './data-source';
 
 export const generateJWT = (payload: Object, expiry: string) => {
   return jsonwebtoken.sign(payload, process.env.EKEY as string, { expiresIn: expiry });

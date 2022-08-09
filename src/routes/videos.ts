@@ -1,8 +1,8 @@
 import express from 'express';
-import * as videosController from '../controllers/videos';
+import { videosController } from '../controllers';
 
 const router = express.Router();
 
 router.get('/', videosController.getVideo);
 
-export default router;
+export { router as videosRouter };

@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import { Users } from '../models/users';
-import dataSource from '../config/data-source';
-import * as auth from '../config/auth';
+import { dataSource, generateJWT } from '../config';
 import bcrypt from 'bcrypt';
 
 const getUser = async (req: Request, res: Response) => {
@@ -87,7 +86,7 @@ const loginUser = async (req: Request, res: Response) => {
       'active': query.active 
     };
 
-    const token = auth.generateJWT(payload, '3h');
+    const token = generateJWT(payload, '3h');
 
     return res.status(200)
       .cookie('jwt', token, { httpOnly: true, secure: false })
@@ -146,7 +145,7 @@ const updateUser = async (req: Request, res: Response) => {
       'active': query.raw[0].active,
     };
 
-    const token = auth.generateJWT(payload, '3h');
+    const token = generateJWT(payload, '3h');
 
     return res.status(200)
       .cookie('jwt', token, { httpOnly: true, secure: false })

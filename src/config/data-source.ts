@@ -2,7 +2,7 @@ import { DataSource } from 'typeorm';
 import { Users } from '../models/users';
 import { Favorites } from '../models/favorites';
 
-const dataSource = new DataSource({
+export const dataSource = new DataSource({
   type: 'postgres',
   host: process.env.PGHOST,
   username: process.env.PGUSER,
@@ -15,5 +15,3 @@ const dataSource = new DataSource({
 
 dataSource.initialize()
   .catch((error) => console.error('Error during Application Data Source Initialization', error));
-
-export default dataSource;

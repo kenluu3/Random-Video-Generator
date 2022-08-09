@@ -1,6 +1,6 @@
 import express from 'express';
 import passport from 'passport';
-import * as usersController from '../controllers/users';
+import { usersController } from '../controllers';
 
 const router = express.Router();
 
@@ -9,4 +9,4 @@ router.put('/:username', passport.authenticate('jwt', { session: false }), users
 router.post('/login', usersController.loginUser);
 router.post('/register', usersController.registerUser);
 
-export default router;
+export { router as usersRouter };

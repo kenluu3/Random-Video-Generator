@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { Users } from './users';
 
 @Entity()
@@ -14,7 +14,4 @@ export class Favorites {
 
   @Column()
   channel: string
-
-  @ManyToOne(() => Users, (users) => users.favorites)
-  user: Users
 }

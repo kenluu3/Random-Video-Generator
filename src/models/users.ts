@@ -17,7 +17,4 @@ export class Users {
 
   @Column()
   active: boolean
-
-  @OneToMany(() => Favorites, (favorites) => favorites.user)
-  favorites: Favorites[]
 }
