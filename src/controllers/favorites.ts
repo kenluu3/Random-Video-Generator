@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import { dataSource } from '../config';
-import { Favorites } from '..models';
-import { Users } from '../models/users';
+import { Favorites, Users } from '../models';
 
 const getFavorites = async (req: Request, res: Response) => {
   let { username } = req.params;
