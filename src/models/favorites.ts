@@ -1,10 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn } from 'typeorm';
+import { Entity, Column, ManyToOne, CreateDateColumn, PrimaryColumn, RelationOptions, JoinColumn } from 'typeorm';
 import { Users } from './users';
 
 @Entity()
 export class Favorites {
-  @PrimaryGeneratedColumn('uuid')
-  id: number
+  @PrimaryColumn()
+  id: string
+
+  @PrimaryColumn()
+  user_id: string
 
   @Column()
   title: string
@@ -19,5 +22,6 @@ export class Favorites {
   insert_date: Date
 
   @ManyToOne(() => Users, users => users.favorites, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'user_id' })
   user: Users
 }
