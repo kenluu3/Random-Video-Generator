@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn } from 'typeorm';
 import { Users } from './users';
 
 @Entity()
@@ -14,4 +14,10 @@ export class Favorites {
 
   @Column()
   channel: string
+
+  @CreateDateColumn()
+  insert_date: Date
+
+  @ManyToOne(() => Users, users => users.favorites, { onDelete: 'CASCADE' })
+  user: Users
 }
