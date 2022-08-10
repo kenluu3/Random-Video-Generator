@@ -1,2 +1,2 @@
-export * from './favorites';
-export * from './users';
+export * from './account';
+export * from './favorite';
