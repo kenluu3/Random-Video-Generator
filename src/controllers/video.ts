@@ -8,7 +8,7 @@ const getVideo = async (req: Request, res: Response) => {
     let query = req.query.q as string || '';
     const queryArr = query.split(',');
 
-    const maxQueries = query.length;
+    const maxQueries = queryArr.length;
     if (maxQueries > 0) {
       query = queryArr[Math.floor(Math.random() * maxQueries)];
     } 
