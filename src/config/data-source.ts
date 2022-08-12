@@ -1,6 +1,7 @@
 import { DataSource } from 'typeorm';
+import { Account, Favorite } from '../models';
 
-export const dataSource = new DataSource({
+const dataSource = new DataSource({
   type: 'postgres',
   host: process.env.PGHOST,
   username: process.env.PGUSER,
@@ -8,9 +9,7 @@ export const dataSource = new DataSource({
   port: Number(process.env.PGPORT),
   database: process.env.PGDATABASE,
   synchronize: true,
-  entities: ['../models/*'],
+  entities: [Account, Favorite],
 });
 
-dataSource.initialize()
-  .then(() => console.log(`Initialized application data source.`))
-  .catch((error) => console.error(`Appliciation data source initialization error: ${error}`));
+export { dataSource };
