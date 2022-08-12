@@ -1,51 +1,49 @@
-import { Request } from 'express';
 import jsonwebtoken from 'jsonwebtoken';
 import passport from 'passport';
 import passportJWT from 'passport-jwt';
-import { Users } from '../models/users';
-import { dataSource } from './data-source';
+import { Request } from 'express';
+import { Account } from '../models';
 
-export const generateJWT = (payload: Object, expiry: string) => {
-  return jsonwebtoken.sign(payload, process.env.EKEY as string, { expiresIn: expiry });
+const generateToken = (payload: Object) => {
+  const tokenDuration = '3h';
+  return jsonwebtoken.sign(payload, process.env.EKEY as string, { expiresIn: tokenDuration });
 }
 
-export const cookieExtractor = (req: Request) => {
+const cookieExtractor = (req: Request) => {
   let token = null;
 
   if (req.cookies) {
-    token = req.cookies['jwt'];
+    token = req.cookies['token'];
   }
 
   return token;
 }
 
-export const jwtStrategyOptions = { 
+const jwtStrategyOptions = {
   secretOrKey: process.env.EKEY,
-  jwtFromRequest: cookieExtractor
+  jwtFromRequest: cookieExtractor,
 }
 
 passport.use(new passportJWT.Strategy(jwtStrategyOptions, async (jwtPayload, done) => {
   const { username } = jwtPayload
 
   try {
-    const query = await dataSource
-      .createQueryBuilder()
-      .select('users')
-      .from(Users, 'users')
-      .where('users.username = :username', {username})
-      .getOne();
-    
+    const query = await Account.findOneBy({ username: username }); 
+
     if (!query) {
       return done(null, false);
     }
-    
-    const user = { 
-      id: query.id,
-      username: query.username
-    };
 
-    return done(null, user);
+    const account = {
+      id: query.id,
+      username: query.username,
+      email: query.email,
+    }
+
+    return done(null, account);
   } catch (error: any) {
     return done(error, false);
   }
 }));
+
+export { generateToken };
