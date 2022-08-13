@@ -15,6 +15,7 @@ app.use(cookieParser());
 
 app.use('/account', accountRouter);
 app.use('/video', videoRouter);
+app.use('/favorite', favoriteRouter);
 
 dataSource.initialize()
   .then(() => console.log(`Initialized application data source.`))
