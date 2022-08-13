@@ -1,3 +1,3 @@
-export * from './favorites';
-export * from './users';
-export * from './videos';
+export * from './account';
+export * from './video';
+export * from './favorite';

@@ -1,3 +1,3 @@
-export * as favoritesController from './favorites';
-export * as usersController from './users';
-export * as videosController from './videos';
+export * as accountController from './account';
+export * as videoController from './video';
+export * as favoriteController from './favorite';

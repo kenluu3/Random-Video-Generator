@@ -3,7 +3,8 @@ dotenv.config();
 
 import express from 'express';
 import cookieParser from 'cookie-parser';
-import { usersRouter, favoritesRouter, videosRouter } from './routes';
+import { dataSource } from './config';
+import { accountRouter, videoRouter, favoriteRouter } from './routes';
 
 const port = process.env.PORT || 8080;
 const app = express();
@@ -12,9 +13,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.use('/videos', videosRouter);
-app.use('/favorites', favoritesRouter);
-app.use('/users', usersRouter);
+app.use('/account', accountRouter);
+app.use('/video', videoRouter);
+
+dataSource.initialize()
+  .then(() => console.log(`Initialized application data source.`))
+  .catch((error) => console.error(`Appliciation data source initialization error: ${error}`));
 
 app.listen(port, () => {
   console.log(`Server started listening on port: ${port}`);

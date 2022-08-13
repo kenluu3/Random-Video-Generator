@@ -8,7 +8,7 @@ const getAccount = async (req: Request, res: Response) => {
   const validationError = validationResult(req);
 
   if (!validationError.isEmpty()) {
-    return res.status(400).json({ errors: validationError.array() });
+    return res.status(400).json({ error: validationError.array() });
   }
 
   const { username } = req.params;
@@ -30,7 +30,7 @@ const registerAccount = async (req: Request, res: Response) => {
   const validationError = validationResult(req);
 
   if (!validationError.isEmpty()) {
-    return res.status(400).json({ errors: validationError.array() });
+    return res.status(400).json({ error: validationError.array() });
   }
 
   const { username, email, password } = req.body;
@@ -52,7 +52,7 @@ const updateAccount = async (req: Request, res: Response) => {
   const validationError = validationResult(req);
 
   if (!validationError.isEmpty()) {
-    return res.status(400).json({ errors: validationError.array() });
+    return res.status(400).json({ error: validationError.array() });
   }
 
   const { username, email, password } = req.body;
@@ -69,17 +69,9 @@ const updateAccount = async (req: Request, res: Response) => {
       return res.status(400).json({ error: 'Invalid request' });
     }
 
-    if (username) {
-      account.username = username;
-    }
-
-    if (email) {
-      account.email = email;
-    }
-
-    if (password) {
-      account.password = await bcrypt.hash(password, Number(process.env.SALT));
-    }
+    if (username) account.username = username;
+    if (email) account.email = email;
+    if (password) account.password = await bcrypt.hash(password, Number(process.env.SALT));
 
     await account.save();
 
@@ -102,7 +94,7 @@ const loginAccount = async (req: Request, res: Response) => {
   const validationError = validationResult(req);
 
   if (!validationError.isEmpty()) {
-    return res.status(400).json({ errors: validationError.array() });
+    return res.status(400).json({ error: validationError.array() });
   }
 
   const { username, password } = req.body;
