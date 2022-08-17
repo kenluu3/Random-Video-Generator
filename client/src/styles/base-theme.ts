@@ -1,9 +1,8 @@
 const baseTheme = {
-  defaultRadius: 'sm',
+  defaultRadius: 'xs',
   components: {
     Button: {
       defaultProps: {
-        radius: 'xs',
         color: 'indigo',
         uppercase: true,
       },
