@@ -46,6 +46,24 @@ const Navigation = (props: any) => {
                 </Text>
               </Group>
             </Link>
+            <Link
+              to='/register'
+            >
+              <Group 
+                spacing={5} 
+              >
+                <IconHome2 
+                  color={theme.colors.indigo[9]}
+                />
+                <Text 
+                  transform='uppercase'
+                  weight={700}
+                  color='black'
+                >
+                  Register
+                </Text>
+              </Group>
+            </Link>            
           </Navbar.Section>
 
           <Navbar.Section>

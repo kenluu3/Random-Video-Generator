@@ -1,6 +1,6 @@
 import React from 'react';
 import { Center, createStyles } from '@mantine/core';
-import { Form } from '../../components';
+import { RegisterForm } from '../../components';
 
 const useStyles = createStyles((theme) => ({
   pageContainer: {
@@ -16,7 +16,7 @@ const Register = () => {
     <Center
       className={classes.pageContainer}
     >
-      <Form />
+      <RegisterForm />
     </Center>
   )
 }

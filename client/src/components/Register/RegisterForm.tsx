@@ -16,7 +16,7 @@ const useStyles = createStyles((theme) => ({
   }
 }));
 
-const Form = () => {
+const RegisterForm = () => {
   const { classes } = useStyles();
 
   return (
@@ -75,4 +75,4 @@ const Form = () => {
   )
 }
 
-export { Form };
+export { RegisterForm };
