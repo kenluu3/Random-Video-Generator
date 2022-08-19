@@ -1,22 +1,14 @@
 const baseTheme = {
-  defaultRadius: 'xs',
-  components: {
-    Button: {
-      defaultProps: {
-        color: 'indigo',
-        uppercase: true,
-      },
-    },
+  fontFamily: 'Roboto, sans-serif',
+  fontSize: {
+    xs: 12,
+    sm: 14,
+    md: 16,
+    lg: 18, 
+    xl: 20,
   },
   headings: {
-    fontFamily: 'cursive, fantasy'
-  },
-  fontSizes: {
-    xs: 11,
-    sm: 12,
-    md: 14,
-    lg: 16,
-    xl: 20,
+    fontFamily: 'Roboto, sans-serif',
   }
 }
 
