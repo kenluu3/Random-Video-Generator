@@ -9,8 +9,15 @@ const Logo = () => {
     <Group
       spacing={5}
     >
-      <IconDeviceTvOld color={theme.colors.indigo[9]} size={26} />
-      <Title size={24}>RVP</Title>
+      <IconDeviceTvOld 
+        color={theme.colors.indigo[9]} 
+        size={26} 
+      />
+      <Title 
+        size={24}
+      >
+        RVP
+      </Title>
     </Group>
   )
 }

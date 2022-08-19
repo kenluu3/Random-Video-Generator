@@ -9,7 +9,9 @@ const baseTheme = {
   },
   headings: {
     fontFamily: 'Roboto, sans-serif',
-  }
+  },
+  defaultRadius: 'xs',
+  shadows: 'md',
 }
 
 export { baseTheme };
