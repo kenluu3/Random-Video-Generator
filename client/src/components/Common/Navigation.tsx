@@ -1,95 +1,111 @@
-import React from 'react';
+import React, { PropsWithChildren, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { AppShell, Header, Navbar, Group, Text, useMantineTheme } from '@mantine/core';
-import { IconHome2, IconLogin } from '@tabler/icons';
+import { AppShell, Burger, Divider, Group, Header, Navbar, Stack, Text, MediaQuery, createStyles } from '@mantine/core';
+import { IconLogin, IconHome2, IconUserPlus } from '@tabler/icons';
 import { Logo } from './Logo';
+import { home, login, register, profile } from '../../app';
 
-const Navigation = (props: any) => {
-  const theme = useMantineTheme();
+const navigationStyles = createStyles((theme) => ({
+  navigationStack: {
+    height: '100%',
+    paddingBottom: '5%',
+  },
+  navigationLink: {
+    textDecoration: 'none'
+  },
+}));
+
+const Navigation = ({ children }: PropsWithChildren) => {
+  const { classes } = navigationStyles();
+  const [open, setOpen] = useState(false);
 
   return (
     <AppShell
       padding='md'
       styles={(theme) => ({
-        main: { backgroundColor: theme.colors.gray[0] },
+        main: {
+          backgroundColor: theme.colors.gray[2]
+        }
       })}
       header={
         <Header
-          height={60}
+          height={65}
           p='md'
-        >
-          <Logo />
+        > 
+          <Group
+            position='apart'
+          >
+            <MediaQuery largerThan='sm' styles={{ display: 'none' }}>
+              <Burger 
+                size='sm'
+                opened={open}
+                onClick={() => setOpen(!open)}
+              />
+            </MediaQuery>
+            <Logo />
+          </Group>
         </Header>
       }
       navbar={
-        <Navbar 
+        <Navbar
           hiddenBreakpoint='sm'
+          hidden={!open}
+          width={{ 
+            base: 175,
+            md: 200,
+          }}
           p='md'
-          width={{ base: 180 }}
         >
-          <Navbar.Section>
-            <Link
-              to='/'
-            >
-              <Group 
-                spacing={5} 
-              >
-                <IconHome2 
-                  color={theme.colors.indigo[9]}
-                />
-                <Text 
-                  transform='uppercase'
-                  weight={700}
-                  color='black'
-                >
-                  Home
-                </Text>
-              </Group>
-            </Link>
-            <Link
-              to='/register'
-            >
-              <Group 
-                spacing={5} 
-              >
-                <IconHome2 
-                  color={theme.colors.indigo[9]}
-                />
-                <Text 
-                  transform='uppercase'
-                  weight={700}
-                  color='black'
-                >
-                  Register
-                </Text>
-              </Group>
-            </Link>            
-          </Navbar.Section>
+          <Stack
+            justify='space-between'
+            className={classes.navigationStack}
+          > 
+            <Navbar.Section>
+              <Link 
+                to={home}
+                className={classes.navigationLink}
+              > 
+                <Group
+                > 
+                  <IconHome2 />
+                  <Text>Home</Text>
+                </Group>
+              </Link>
+            </Navbar.Section>
 
-          <Navbar.Section>
-            <Link
-              to='/login'
-            >
-            <Group 
-              spacing={5} 
-            >
-              <IconLogin 
-                color={theme.colors.indigo[9]}
+            <Navbar.Section>
+              <Divider 
+                size='sm'
+                p={5}
               />
-              <Text 
-                transform='uppercase'
-                weight={700}
-                color='black'
-              >
-                Login
-              </Text>
-            </Group>
-            </Link>
-          </Navbar.Section>
+              <Link 
+                to={login}
+                className={classes.navigationLink}
+              > 
+                <Group
+                  spacing='xs'
+                > 
+                  <IconLogin />
+                  <Text>Login</Text>
+                </Group>
+              </Link>
+              <Link 
+                to={register}
+                className={classes.navigationLink}
+              > 
+                <Group
+                  spacing='xs'
+                > 
+                  <IconUserPlus />
+                  <Text>Register</Text>
+                </Group>
+              </Link>
+            </Navbar.Section>
+          </Stack>
         </Navbar>
       }
     >
-      {props.children}
+     {children} 
     </AppShell>
   )
 }

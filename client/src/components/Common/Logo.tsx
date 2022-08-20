@@ -1,23 +1,29 @@
 import React from 'react';
-import { useMantineTheme, Group, Title } from '@mantine/core';
-import { IconDeviceTvOld } from '@tabler/icons';
+import { Group, Text, createStyles } from '@mantine/core';
+import { IconDeviceTv } from '@tabler/icons';
+
+const logoStyles = createStyles((theme) => ({
+  logoIcon: {
+    color: theme.colors.indigo[9],
+  },
+}));
 
 const Logo = () => {
-  const theme = useMantineTheme();
-  
+  const { classes } = logoStyles();
+
   return (
     <Group
-      spacing={5}
+      spacing={1}
     >
-      <IconDeviceTvOld 
-        color={theme.colors.indigo[9]} 
-        size={26} 
+      <IconDeviceTv 
+        className={classes.logoIcon}
+        size={26}
       />
-      <Title 
-        size={24}
+      <Text
+        size={26}
       >
         RVP
-      </Title>
+      </Text>
     </Group>
   )
 }
