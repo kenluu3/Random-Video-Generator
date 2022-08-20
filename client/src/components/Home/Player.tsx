@@ -1,34 +1,39 @@
-import React from 'react';
-import { AspectRatio, Paper, createStyles } from '@mantine/core';
+import React, { useState } from 'react';
+import { AspectRatio, Button, Paper, createStyles } from '@mantine/core';
+import { getVideo } from '../../app';
 
 const useStyles = createStyles((theme) => ({
   playerContainer: {
-    width: '1280px',
-    height: '730px',
+    width: '69%',
   },
+  playerFrame: {
+    width: '100%',
+    height: '100%',
+  }
 }));
 
 const Player = () => {
   const { classes } = useStyles();
 
   return (
-    <Paper
-      p='sm'
-      withBorder
+    <AspectRatio
+      ratio={ 16/9 }
       className={classes.playerContainer}
     >
-      <AspectRatio 
-        ratio={ 16 / 9 }
+      <Paper
+        p='sm'
+        withBorder
       >
         <iframe
-          src="https://www.youtube.com/embed/Dorf8i6lCuk"
+          className={classes.playerFrame}
+          src={'https://www.youtube.com/embed/cdhwvAq_1Xw'}
           frameBorder={0}
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          title='Video Player'
+          allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+          title='YouTube Video Player'
           allowFullScreen
         />
-      </AspectRatio>
-    </Paper>
+      </Paper>
+    </AspectRatio>
   )
 }
 
