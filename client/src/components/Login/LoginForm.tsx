@@ -1,66 +1,76 @@
 import React from 'react';
-import { Button, Paper, Center, TextInput, PasswordInput, createStyles, Text } from '@mantine/core';
-import { IconUser, IconLock } from '@tabler/icons';
+import { Link } from 'react-router-dom';
+import { Paper, Button, Center, TextInput, PasswordInput, Text, createStyles, Stack } from '@mantine/core';
+import { IconUser, IconLock } from '@tabler/icons'
 import { Logo } from '../Common/Logo';
+import { register } from '../../app';
 
-const useStyles = createStyles((theme) => ({
-  formWrapper: {
-    width: '550px',
-    height: '600px',
-  },
+const loginFormStyles = createStyles((theme) => ({
   formContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    padding: '16px 50px',
+    width: '25vw',
+    height: '50vh',
+  },
+  form: {
+    height: '65%',
+    padding: '10% 10%'
   }
 }));
 
+const handleLogin = () => {
+
+}
+
 const LoginForm = () => {
-  const { classes } = useStyles();
+  const { classes } = loginFormStyles()
 
   return (
     <Paper
-      p='md'
-      withBorder
-      className={classes.formWrapper}
-    > 
-      <Center p='xl'>
+      className={classes.formContainer}
+    >
+      <Center
+        p='md'
+      >
         <Logo />
       </Center>
-      <Center>
-        <Text
-        size='xl'
-        weight={700}
-        transform='uppercase'
-        >
-          Account Login
-        </Text>
-      </Center>
       <form
-        className={classes.formContainer}
+        className={classes.form}
       >
-        <TextInput
-          label='USERNAME'
-          icon={<IconUser />}
-          placeholder='username'
-          required
-          variant='filled'
-          size='md'
-        />
-        <PasswordInput
-          label='PASSWORD'
-          icon={<IconLock />}
-          placeholder='password'
-          required
-          variant='filled'
-          size='md'
-        />
-        <Button
-          uppercase
-          size='md'
+        <Stack
+          spacing='sm'
+          justify='space-between'
+          sx={{
+            height: '100%'
+          }}
         >
-          Login
-        </Button>
+          <TextInput 
+            label='USERNAME'
+            icon={<IconUser />}
+            required
+            minLength={5}
+            maxLength={25}
+            placeholder='username'
+          />
+          <PasswordInput
+            label='PASSWORD'
+            icon={<IconLock />}
+            required
+            minLength={5}
+            maxLength={25}
+            placeholder='password'
+          />
+          <Stack
+            spacing={0}
+          >
+            <Button>
+              Login
+            </Button>
+            <Text
+              size='xs'
+            >
+              Don't have an account? Click <Link to={register}>here</Link> to register.
+            </Text>
+          </Stack>
+        </Stack>
       </form>
     </Paper>
   )

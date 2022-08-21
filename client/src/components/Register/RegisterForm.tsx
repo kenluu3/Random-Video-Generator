@@ -37,7 +37,7 @@ const RegisterForm = () => {
       >
         <Stack
           spacing='sm'
-          justify="space-between"
+          justify='space-between'
           sx={{
             height: '100%'
           }}
