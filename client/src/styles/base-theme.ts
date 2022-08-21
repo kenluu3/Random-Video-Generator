@@ -12,6 +12,26 @@ const baseTheme = {
   },
   defaultRadius: 'xs',
   shadows: 'md',
+  components: {
+    Button: {
+      defaultProps: {
+        uppercase: true,
+      }
+    },
+    Text: {
+      defaultProps: {
+        weight: 700,
+        color: 'black',
+      }
+    },
+    Paper: {
+      defaultProps: {
+        p: 'xs',
+        radius: 'sm',
+        withBorder: true,
+      }
+    }
+  }
 }
 
 export { baseTheme };

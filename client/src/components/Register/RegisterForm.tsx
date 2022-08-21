@@ -1,75 +1,91 @@
 import React from 'react';
-import { Button, Paper, Center, TextInput, PasswordInput, createStyles, Text } from '@mantine/core';
-import { Logo } from '../Common/Logo';
+import { Link } from 'react-router-dom';
+import { Paper, Button, Stack, Center, Text, TextInput, PasswordInput, createStyles } from '@mantine/core';
+import { IconAt, IconLock, IconUser } from '@tabler/icons';
+import { Logo } from '../../components';
+import { login } from '../../app';
 
-const useStyles = createStyles((theme) => ({
-  formWrapper: {
-    width: '550px',
-    height: '600px',
-  },
+const registerFormStyles = createStyles((theme) => ({
   formContainer: {
-    height: '75%',
-    display: 'flex',
-    flexDirection: 'column',
-    padding: '16px 50px',
-    justifyContent: 'space-between'
+    width: '25vw',
+    height: '50vh',
+  },
+  form: {
+    height: '80%',
+    padding: '0 10%'
   }
 }));
 
+const handleRegister = () => {
+  
+}
+
 const RegisterForm = () => {
-  const { classes } = useStyles();
+  const { classes } = registerFormStyles();
 
   return (
     <Paper
-      p='md'
-      withBorder
-      className={classes.formWrapper}
-    > 
-      <Center p='xl'>
+      className={classes.formContainer}
+    >
+      <Center
+        p='xs'
+      >
         <Logo />
       </Center>
-      <Center>
-        <Text
-        size='xl'
-        weight={700}
-        transform='uppercase'
-        >
-          Registration
-        </Text>
-      </Center>
       <form
-        className={classes.formContainer}
+        className={classes.form}
       >
-        <TextInput
-          label='EMAIL'
-          placeholder='example@mail.com'
-          required
-          variant='filled'
-          type='email'
-          size='md'
-        />
-        <TextInput
-          label='USERNAME'
-          description='Username should be between 5 and 25 characters'
-          placeholder='username'
-          required
-          variant='filled'
-          size='md'
-        />
-        <PasswordInput
-          label='PASSWORD'
-          description='Password should be between 5 and 25 characters'
-          placeholder='password'
-          required
-          variant='filled'
-          size='md'
-        />
-        <Button
-          uppercase
-          size='md'
+        <Stack
+          spacing='sm'
+          justify="space-between"
+          sx={{
+            height: '100%'
+          }}
         >
-          Register
-        </Button>
+          <TextInput 
+            label='EMAIL'
+            icon={<IconAt />}
+            required
+            placeholder='example@mail.com'
+            type='email'
+          />
+          <TextInput 
+            label='USERNAME'
+            icon={<IconUser />}
+            required
+            minLength={5}
+            maxLength={25}
+            placeholder='username'
+          />
+          <PasswordInput
+            label='PASSWORD'
+            icon={<IconLock />}
+            required
+            minLength={5}
+            maxLength={25}
+            placeholder='password'
+          />
+          <PasswordInput
+            label='CONFIRM PASSWORD'
+            icon={<IconLock />}
+            required
+            minLength={5}
+            maxLength={25}
+            placeholder='password'
+          />
+          <Stack
+            spacing={0}
+          >
+            <Button>
+              Register
+            </Button>
+            <Text
+              size='xs'
+            >
+              Already have an account? Click <Link to={login}>here</Link> to login.
+            </Text>
+          </Stack>
+        </Stack>
       </form>
     </Paper>
   )

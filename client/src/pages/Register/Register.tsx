@@ -1,20 +1,16 @@
 import React from 'react';
-import { Center, createStyles } from '@mantine/core';
+import { Center, useMantineTheme } from '@mantine/core';
 import { RegisterForm } from '../../components';
 
-const useStyles = createStyles((theme) => ({
-  pageContainer: {
-    height: '100vh',
-    backgroundColor: theme.colors.gray[0]
-  }
-}))
-
 const Register = () => {
-  const { classes } = useStyles();
+  const theme = useMantineTheme();
 
   return (
     <Center
-      className={classes.pageContainer}
+      sx={{
+        height: '100vh',
+        backgroundColor: theme.colors.gray[2]
+      }}
     >
       <RegisterForm />
     </Center>
