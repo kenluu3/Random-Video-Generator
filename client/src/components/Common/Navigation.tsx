@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { AppShell, Burger, Divider, Group, Header, Navbar, Stack, Text, MediaQuery, createStyles } from '@mantine/core';
 import { IconLogin, IconHome2, IconUserPlus } from '@tabler/icons';
 import { Logo } from './Logo';
-import { home, login, register, profile } from '../../app';
+import { appRoutes } from '../../app';
 
 const navigationStyles = createStyles((theme) => ({
   navigationStack: {
@@ -62,7 +62,7 @@ const Navigation = ({ children }: PropsWithChildren) => {
           > 
             <Navbar.Section>
               <Link 
-                to={home}
+                to={appRoutes.home}
                 className={classes.navigationLink}
               > 
                 <Group
@@ -79,7 +79,7 @@ const Navigation = ({ children }: PropsWithChildren) => {
                 p={5}
               />
               <Link 
-                to={login}
+                to={appRoutes.login}
                 className={classes.navigationLink}
               > 
                 <Group
@@ -90,7 +90,7 @@ const Navigation = ({ children }: PropsWithChildren) => {
                 </Group>
               </Link>
               <Link 
-                to={register}
+                to={appRoutes.register}
                 className={classes.navigationLink}
               > 
                 <Group

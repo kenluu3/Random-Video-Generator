@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { MantineProvider } from '@mantine/core';
 import { Home, Login, Register, Profile } from '../pages';
 import { baseTheme } from '../styles';
-import { login, home, profile, register } from './routes';
+import { appRoutes } from './routes';
 
 const App = () => {
   return(
@@ -14,10 +14,10 @@ const App = () => {
     >
       <BrowserRouter>
         <Routes>
-          <Route path={home} element={<Home />} />
-          <Route path={login} element={<Login />} />
-          <Route path={register} element={<Register />} />
-          <Route path={profile} element={<Profile />} />
+          <Route path={appRoutes.home} element={<Home />} />
+          <Route path={appRoutes.login} element={<Login />} />
+          <Route path={appRoutes.register} element={<Register />} />
+          <Route path={appRoutes.user} element={<Profile />} />
         </Routes>
       </BrowserRouter>
     </MantineProvider>

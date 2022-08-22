@@ -1,6 +1,8 @@
-const home = '/';
-const login = '/login';
-const register = '/register';
-const profile = '/profile/:username';
+const appRoutes = {
+  home: '/',
+  login: '/login',
+  register: '/register',
+  user: '/user/:username',
+}
 
-export { login, home, register, profile };
+export { appRoutes };
