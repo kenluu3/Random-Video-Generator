@@ -6,7 +6,6 @@ import cookieParser from 'cookie-parser';
 import { dataSource } from './config';
 import { accountRouter, videoRouter, favoriteRouter } from './routes';
 
-
 const port = process.env.PORT || 8080;
 const app = express();
 
