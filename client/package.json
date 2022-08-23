@@ -4,7 +4,7 @@
   "description": "Random video player client",
   "scripts": {
     "build": "webpack",
-    "dev": "webpack serve"
+    "dev": "node --max-old-space-size=8192 node_modules/webpack/bin/webpack.js serve"
   },
   "keywords": [
     "random",
