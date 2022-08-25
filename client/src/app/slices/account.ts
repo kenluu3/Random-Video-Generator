@@ -11,7 +11,6 @@ const accountLogin = createAsyncThunk(
   'account/accountLogin',
   async (payload: any) => {
     const response = await accountAPI.login(payload);
-
     return response.data;
   }
 )
