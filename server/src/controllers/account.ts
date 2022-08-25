@@ -42,7 +42,7 @@ const registerAccount = async (req: Request, res: Response) => {
     account.password = await bcrypt.hash(password, Number(process.env.SALT));
     await account.save();
 
-    return res.status(200).json({ message: 'Account created successfully' });
+    return res.status(200).json({ message: 'Account created successfully', username: account.username });
   } catch (error: any) {
     return res.status(500).json({ error: 'Internal Server Error' });
   }
@@ -121,7 +121,7 @@ const loginAccount = async (req: Request, res: Response) => {
 
     return res.status(200)
       .cookie('token', token, { httpOnly: true, secure: false })
-      .json({ message: 'Logged in successfully' });
+      .json({ message: 'Logged in successfully', username: payload.username });
   } catch (error: any) {
     return res.status(500).json({ error: 'Internal Server Error' });
   }

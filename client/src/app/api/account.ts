@@ -1,19 +1,18 @@
 import { apiClient, apiRoutes } from './config';
 
-const loginAccount = (payload: Object) => {
-  return apiClient.post(apiRoutes.accountLogin, payload);
+const accountAPI = {
+  login: (payload: any) => {
+    return apiClient.post(apiRoutes.account.login, payload);
+  },
+  register: (payload: any) => {
+    return apiClient.post(apiRoutes.account.register, payload);
+  },
+  update: (payload: any) => {
+    return apiClient.patch(apiRoutes.account.update, payload);
+  },
+  get: (username: string) => {
+    return apiClient.get(`${apiRoutes.account.get}/${username}`);
+  }
 }
 
-const registerAccount = (payload: Object) => {
-  return apiClient.post(apiRoutes.accountRegister, payload);
-}
-
-const updateAccount = (payload: Object) => {
-  return apiClient.post(apiRoutes.accountUpdate, payload);
-}
-
-const getAccount = (username: string) => {
-  return apiClient.get(`${apiRoutes.getAccount}/${username}`);
-}
-
-export { loginAccount, registerAccount, updateAccount, getAccount };
+export { accountAPI };

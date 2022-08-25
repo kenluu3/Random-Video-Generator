@@ -1,16 +1,16 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
-const initialState: string[] = []
+const initialState = new Array<string>;
 
 const tagsSlice = createSlice({
   name: 'tags',
   initialState,
   reducers: {
-    addTag: (state, action: PayloadAction<string>) => {
-      state.push(action.payload);
+    addTag: (state, action) => {
+      [...state, action.payload]
     },
-    removeTag: (state, action: PayloadAction<number>) => {
-      state.splice(action.payload, 1);
+    removeTag: (state, action) => {
+      state.splice(action.payload, 1)
     },
     clearTags: () => {
       return []
@@ -18,7 +18,5 @@ const tagsSlice = createSlice({
   }
 })
 
-const tagsReducer = tagsSlice.reducer;
-const { addTag, removeTag, clearTags } = tagsSlice.actions;
-
-export { tagsReducer, addTag, removeTag, clearTags };
+export const tagsReducer = tagsSlice.reducer;
+export const tagsActions = tagsSlice.actions;

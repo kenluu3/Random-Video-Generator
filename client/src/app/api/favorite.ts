@@ -1,15 +1,15 @@
 import { apiClient, apiRoutes } from './config';
 
-const addFavorite = (payload: Object) => {
-  return apiClient.post(apiRoutes.addFavorite, payload);
+const favoriteAPI = {
+  add: (payload: any) => {
+    return apiClient.post(apiRoutes.favorite.add, payload);
+  },
+  remove: (payload: any) => {
+    return apiClient.delete(apiRoutes.favorite.remove, payload);
+  },
+  get: (username: string) => {
+    return apiClient.get(`${apiRoutes.favorite.get}/${username}`);
+  }
 }
 
-const removeFavorite = (payload: Object) => {
-  return apiClient.delete(apiRoutes.removeFavorite, payload);
-}
-
-const getFavorites = (username: string) => {
-  return apiClient.get(`${apiRoutes.getFavorites}/${username}`);
-}
-
-export { addFavorite, removeFavorite, getFavorites };
+export { favoriteAPI };

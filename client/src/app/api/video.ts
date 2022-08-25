@@ -1,13 +1,15 @@
 import { apiClient, apiRoutes } from './config';
 
-const getVideo = (queries: string[]) => {
-  const queryConfig = {
-    params: {
-      q: queries.join(',')
+const videoAPI = {
+  get: (queries: string[] = []) => {
+    const queryConfig = {
+      params: {
+        q: queries.join(',')
+      }
     }
-  }   
 
-  return apiClient.get(apiRoutes.getVideo, queryConfig)
+    return apiClient.get(apiRoutes.video.get, queryConfig);
+  }
 }
 
-export { getVideo }
+export { videoAPI };
