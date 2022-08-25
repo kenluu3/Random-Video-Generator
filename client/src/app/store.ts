@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { tagsSlice, accountSlice } from './reducers';
+import { tagsReducer } from './slices';
 
 const store = configureStore({
   reducer: {
-    tags: tagsSlice.reducer,
-    account: accountSlice.reducer
+    tags: tagsReducer
   }
 })
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
 
 export { store };
