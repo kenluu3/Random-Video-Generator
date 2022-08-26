@@ -28,7 +28,7 @@ const accountSlice = createSlice({
       return {...state, loading: true };
     }),
     builder.addCase(accountLogin.fulfilled, (state, action) => {
-      return {...state, loggedIn: false, username: action.payload.username};
+      return {...state, loggedIn: true, username: action.payload.username};
     }),
     builder.addCase(accountLogin.rejected, () => {
       return initialState;

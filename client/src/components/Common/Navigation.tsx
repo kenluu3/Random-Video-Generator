@@ -1,111 +1,79 @@
-import React, { PropsWithChildren, useState } from 'react';
+import React, { PropsWithChildren, SyntheticEvent } from 'react';
 import { Link } from 'react-router-dom';
-import { AppShell, Burger, Divider, Group, Header, Navbar, Stack, Text, MediaQuery, createStyles } from '@mantine/core';
-import { IconLogin, IconHome2, IconUserPlus } from '@tabler/icons';
+import { AppShell, Header, Navbar, Text, Group, Avatar } from '@mantine/core';
 import { Logo } from './Logo';
-import { appRoutes } from '../../app';
+import { IconHome, IconStar, IconLogout, IconLogin } from '@tabler/icons';
+import { accountActions, appRoutes, useAppSelector, useAppDispatch } from '../../app';
 
-const navigationStyles = createStyles((theme) => ({
-  navigationStack: {
-    height: '100%',
-    paddingBottom: '5%',
-  },
-  navigationLink: {
-    textDecoration: 'none'
-  },
-}));
+const Navigation = ({children}: PropsWithChildren) => {
+  const account = useAppSelector((state) => state.account);
+  const dispatch = useAppDispatch();
 
-const Navigation = ({ children }: PropsWithChildren) => {
-  const { classes } = navigationStyles();
-  const [open, setOpen] = useState(false);
+  const handleLogout = (event: SyntheticEvent) => {
+    event.preventDefault();
+    dispatch(accountActions.accountLogout());
+  }
 
   return (
     <AppShell
       padding='md'
       styles={(theme) => ({
         main: {
-          backgroundColor: theme.colors.gray[2]
+          backgroundColor: theme.colors.gray[4]
         }
       })}
       header={
-        <Header
-          height={65}
-          p='md'
-        > 
-          <Group
-            position='apart'
-          >
-            <MediaQuery largerThan='sm' styles={{ display: 'none' }}>
-              <Burger 
-                size='sm'
-                opened={open}
-                onClick={() => setOpen(!open)}
-              />
-            </MediaQuery>
-            <Logo />
-          </Group>
+        <Header height={70} p='md'>
+          <Logo />
         </Header>
       }
-      navbar={
-        <Navbar
-          hiddenBreakpoint='sm'
-          hidden={!open}
-          width={{ 
-            base: 175,
-            md: 200,
-          }}
-          p='md'
-        >
-          <Stack
-            justify='space-between'
-            className={classes.navigationStack}
-          > 
-            <Navbar.Section>
-              <Link 
-                to={appRoutes.home}
-                className={classes.navigationLink}
-              > 
-                <Group
-                > 
-                  <IconHome2 />
-                  <Text>Home</Text>
+      navbar={ 
+        <Navbar width={{base: 200}} p='md'>
+          <Navbar.Section>
+            <Link to={appRoutes.home}>
+              <Group>
+                <IconHome />
+                <Text>Home</Text>
+              </Group>
+            </Link>
+            { account.loggedIn &&
+              <Link to={appRoutes.home}>
+                <Group>
+                  <IconStar />
+                  <Text>Favorites</Text>
                 </Group>
               </Link>
-            </Navbar.Section>
-
-            <Navbar.Section>
-              <Divider 
-                size='sm'
-                p={5}
-              />
-              <Link 
-                to={appRoutes.login}
-                className={classes.navigationLink}
-              > 
-                <Group
-                  spacing='xs'
-                > 
-                  <IconLogin />
-                  <Text>Login</Text>
+            }
+          </Navbar.Section>
+  
+          <Navbar.Section>
+            { account.loggedIn 
+              ? 
+                <Group onClick={handleLogout}>
+                  <IconLogout />
+                  <Text>Logout</Text>
                 </Group>
-              </Link>
-              <Link 
-                to={appRoutes.register}
-                className={classes.navigationLink}
-              > 
-                <Group
-                  spacing='xs'
-                > 
-                  <IconUserPlus />
-                  <Text>Register</Text>
+              :
+                <Link to={appRoutes.login}>
+                  <Group>
+                    <IconLogin />
+                    <Text>Login</Text>
+                  </Group>
+                </Link>
+            }
+          </Navbar.Section>
+            { account.loggedIn &&
+              <Navbar.Section>
+                <Group>
+                  <Avatar alt={account.username} />
+                  <Text transform='uppercase'>{account.username}</Text>
                 </Group>
-              </Link>
-            </Navbar.Section>
-          </Stack>
+              </Navbar.Section>
+            }
         </Navbar>
       }
     >
-     {children} 
+      {children}
     </AppShell>
   )
 }

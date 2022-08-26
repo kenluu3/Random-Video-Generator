@@ -1,12 +1,12 @@
 import React from 'react';
-import { Navigation, Player } from '../../components';
+import { Navigation } from '../../components';
 
 const Home = () => {
   return (
     <Navigation>
-      <Player />
+      Home Page
     </Navigation>
-  );
+  )
 }
 
 export { Home };
