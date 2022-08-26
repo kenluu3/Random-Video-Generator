@@ -1,17 +1,19 @@
 import React from 'react';
-import { Center, useMantineTheme } from '@mantine/core';
+import { Center, createStyles } from '@mantine/core';
 import { LoginForm } from '../../components';
 
+const useStyles = createStyles((theme) => ({
+  loginWrapper: {
+    height: '100vh',
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[4]
+  }
+}))
+
 const Login = () => {
-  const theme = useMantineTheme();
+  const { classes } = useStyles();
 
   return (
-    <Center
-      sx={{
-        height: '100vh',
-        backgroundColor: theme.colors.gray[2]
-      }}
-    >
+    <Center className={classes.loginWrapper}>
       <LoginForm />
     </Center>
   )
