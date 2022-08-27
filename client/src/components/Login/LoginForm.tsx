@@ -61,7 +61,7 @@ const LoginForm = () => {
         <Center>
           <Logo />
         </Center>
-        <form>
+        <form onSubmit={handleLogin}>
           <Stack>
             <TextInput
               icon={<IconUser />}
@@ -78,7 +78,7 @@ const LoginForm = () => {
               {...form.getInputProps('password')}
             />
             <Stack spacing={0}>
-              <Button onClick={handleLogin}>Login</Button>
+              <Button type='submit'>Login</Button>
               <Text>
                 Don't have an account? Click <Link to={appRoutes.register}>here</Link> to create an account
               </Text>
