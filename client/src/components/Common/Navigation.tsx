@@ -1,6 +1,5 @@
 import React, { PropsWithChildren, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { AppShell, Avatar, Box, Burger, Divider, Header, Navbar, MediaQuery, Group, Stack, } from '@mantine/core';
+import { AppShell, Box, Burger, Divider, Header, Navbar, MediaQuery, Group, Stack, } from '@mantine/core';
 import { IconHome2, IconStar, IconLogin, IconLogout } from '@tabler/icons';
 import { Logo } from './Logo';
 import { ProfileCard } from './ProfileCard';

@@ -20,7 +20,7 @@ const baseTheme = {
     },
     Text: {
       defaultProps: {
-        weight: 700,
+        weight: 0,
         color: 'black',
       }
     },
@@ -30,7 +30,7 @@ const baseTheme = {
         radius: 'sm',
         withBorder: true,
       }
-    }
+    },
   }
 }
 
