@@ -1,7 +1,7 @@
 {
-  "name": "random-video-player",
+  "name": "random-video-generator",
   "version": "1.0.0",
-  "description": "Random video player server",
+  "description": "Random video generator application server",
   "scripts": {
     "start": "npm run build && npm run serve",
     "serve": "nodemon src/index.ts",
@@ -10,7 +10,8 @@
   "keywords": [
     "random",
     "video",
-    "youtube"
+    "youtube",
+    "generator"
   ],
   "author": "Ken Luu",
   "license": "ISC",
