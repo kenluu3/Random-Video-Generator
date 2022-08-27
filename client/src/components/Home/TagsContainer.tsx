@@ -1,6 +1,7 @@
 import React, { SyntheticEvent, useState } from 'react';
 import { Box, Button, Stack, TextInput } from '@mantine/core';
 import { tagsActions, useAppSelector, useAppDispatch } from '../../app';
+import { IconFilter, IconPlus, IconClearAll } from '@tabler/icons';
 import { TagItem } from './TagItem';
 
 const TagsContainer = () => {
@@ -38,15 +39,16 @@ const TagsContainer = () => {
 
   return (
     <Stack>
-      <TextInput 
-        variant='filled' 
+      <TextInput
+        icon={<IconFilter />}
+        variant='filled'
         value={tagInput}
         placeholder='Add tags to narrow randomized result'
         onChange={handleTagInputChange}
         onKeyDown={handleSubmitTag}
       />
-      <Button onClick={handleAddTag}>Add</Button>
-      <Button onClick={handleClearTag}>Clear</Button>
+      <Button onClick={handleAddTag} rightIcon={<IconPlus />}>Add</Button>
+      <Button onClick={handleClearTag} rightIcon={<IconClearAll />}>Clear</Button>
       <Box>
         {tagsListComponent}
       </Box>
