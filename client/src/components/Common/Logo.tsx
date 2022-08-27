@@ -1,31 +1,33 @@
 import React from 'react';
-import { Group, Text, createStyles } from '@mantine/core';
-import { IconDeviceTv } from '@tabler/icons';
+import { Link } from 'react-router-dom';
+import { Group, Text, ThemeIcon } from '@mantine/core';
+import { IconArrowsShuffle } from '@tabler/icons';
+import { appRoutes } from '../../app';
 
-const logoStyles = createStyles((theme) => ({
-  logoIcon: {
-    color: theme.colors.indigo[9],
-  },
-}));
+interface LogoProps {
+  size?: number
+}
 
-const Logo = () => {
-  const { classes } = logoStyles();
-
+const Logo = ({ size=30 }: LogoProps) => {
   return (
-    <Group
-      spacing={1}
-    >
-      <IconDeviceTv 
-        className={classes.logoIcon}
-        size={26}
-      />
-      <Text
-        size={26}
+    <Link
+      to={appRoutes.home}
+      style={{ textDecoration: 'none' }}>
+      <Group
+        sx={{ display: 'inline-flex' }}
+        spacing={5}
       >
-        RVP
-      </Text>
-    </Group>
+        <ThemeIcon
+          radius='xl'
+          variant='gradient' gradient={{ from: 'indigo', to: 'violet', deg: 45 }}
+        >
+          <IconArrowsShuffle size={size} />
+        </ThemeIcon>
+        <Text weight={0} size={size}>RVG</Text>
+      </Group>
+    </Link>
   )
 }
 
+export type { LogoProps };
 export { Logo };

@@ -1,75 +1,76 @@
-import React, { PropsWithChildren, SyntheticEvent } from 'react';
+import React, { PropsWithChildren, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { AppShell, Header, Navbar, Text, Group, Avatar } from '@mantine/core';
+import { AppShell, Avatar, Box, Burger, Divider, Header, Navbar, MediaQuery, Group, Stack, } from '@mantine/core';
+import { IconHome2, IconStar, IconLogin, IconLogout } from '@tabler/icons';
 import { Logo } from './Logo';
-import { IconHome, IconStar, IconLogout, IconLogin } from '@tabler/icons';
-import { accountActions, appRoutes, useAppSelector, useAppDispatch } from '../../app';
+import { ProfileCard } from './ProfileCard';
+import { NavigationItem } from './NavigationItem';
+import { accountActions, appRoutes, useAppDispatch, useAppSelector } from '../../app';
 
-const Navigation = ({children}: PropsWithChildren) => {
+const Navigation = ({ children }: PropsWithChildren) => {
+  const [hiddenNavbar, setHiddenNavbar] = useState(false);
   const account = useAppSelector((state) => state.account);
   const dispatch = useAppDispatch();
 
-  const handleLogout = (event: SyntheticEvent) => {
-    event.preventDefault();
+  const handleLogout = () => {
     dispatch(accountActions.accountLogout());
   }
-
+  
   return (
     <AppShell
-      padding='md'
-      styles={(theme) => ({
-        main: {
-          backgroundColor: theme.colors.gray[4]
-        }
-      })}
+      navbarOffsetBreakpoint='sm'
       header={
-        <Header height={70} p='md'>
-          <Logo />
+        <Header height={65} p='xs'>
+          <Group>
+            <MediaQuery largerThan='sm' styles={{ display: 'none' }}>
+              <Burger
+                size='sm'
+                opened={hiddenNavbar}
+                onClick={() => setHiddenNavbar(!hiddenNavbar)}
+                sx={{ marginRight: 'auto' }}
+              />
+            </MediaQuery>
+            <Box sx={{ marginRight: 'auto' }}>
+              <Logo />
+            </Box>
+          </Group>
         </Header>
       }
-      navbar={ 
-        <Navbar width={{base: 200}} p='md'>
-          <Navbar.Section>
-            <Link to={appRoutes.home}>
-              <Group>
-                <IconHome />
-                <Text>Home</Text>
-              </Group>
-            </Link>
-            { account.loggedIn &&
-              <Link to={appRoutes.home}>
-                <Group>
-                  <IconStar />
-                  <Text>Favorites</Text>
-                </Group>
-              </Link>
-            }
-          </Navbar.Section>
-  
-          <Navbar.Section>
-            { account.loggedIn 
-              ? 
-                <Group onClick={handleLogout}>
-                  <IconLogout />
-                  <Text>Logout</Text>
-                </Group>
-              :
-                <Link to={appRoutes.login}>
-                  <Group>
-                    <IconLogin />
-                    <Text>Login</Text>
-                  </Group>
-                </Link>
-            }
-          </Navbar.Section>
-            { account.loggedIn &&
-              <Navbar.Section>
-                <Group>
-                  <Avatar alt={account.username} />
-                  <Text transform='uppercase'>{account.username}</Text>
-                </Group>
-              </Navbar.Section>
-            }
+      navbar={
+        <Navbar 
+          width={{ base: 220 }}
+          p='lg' hiddenBreakpoint='sm'
+          hidden={!hiddenNavbar}
+        >
+          <Stack
+            sx={{ height: '100%' }}
+            justify='space-between'
+          >
+            <Navbar.Section>
+              <NavigationItem 
+                icon={<IconHome2 color={'skyblue'} size={26} />} 
+                label='HOME' routeTo={appRoutes.home} 
+              />
+            </Navbar.Section>
+            <Navbar.Section>
+              { account.loggedIn &&
+                <Box onClick={handleLogout}>
+                  <NavigationItem
+                    icon={<IconLogout color={'red'} size={26} />}
+                    label='LOGOUT' routeTo={appRoutes.home}
+                  />
+                </Box>
+              }
+              <Divider mt='md' mb='md'/>
+              { account.loggedIn
+                ? <ProfileCard username='username' />
+                : <NavigationItem
+                    icon={<IconLogin color={'lightgreen'} size={26} />}
+                    label='LOGIN' routeTo={appRoutes.login}
+                  />
+              }
+            </Navbar.Section>
+          </Stack>
         </Navbar>
       }
     >
