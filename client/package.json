@@ -1,7 +1,7 @@
 {
-  "name": "random-video-player-client",
+  "name": "random-video-generator-client",
   "version": "1.0.0",
-  "description": "Random video player client",
+  "description": "Random video generator web client",
   "scripts": {
     "build": "webpack",
     "dev": "node --max-old-space-size=8192 node_modules/webpack/bin/webpack.js serve"
@@ -9,7 +9,8 @@
   "keywords": [
     "random",
     "video",
-    "youtube"
+    "youtube",
+    "generator"
   ],
   "author": "Ken Luu",
   "license": "ISC",

@@ -38,7 +38,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Random Video Player',
+      title: 'Random Video Generator',
       template: path.join(__dirname, 'public/index.html'),
     })
   ],

@@ -1,16 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = new Array<string>;
+const initialState: string[] = [];
 
 const tagsSlice = createSlice({
   name: 'tags',
   initialState,
   reducers: {
     addTag: (state, action) => {
-      [...state, action.payload]
+      return [...state, action.payload]
     },
     removeTag: (state, action) => {
-      state.splice(action.payload, 1)
+      return state.filter((tag, i) => i !== action.payload);
     },
     clearTags: () => {
       return []

@@ -1,11 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux';
-import { accountReducer, tagsReducer } from './slices';
+import { accountReducer, tagsReducer, videoReducer } from './slices';
 
 const store = configureStore({
   reducer: {
     account: accountReducer,
     tags: tagsReducer,
+    video: videoReducer,
   }
 })
 
