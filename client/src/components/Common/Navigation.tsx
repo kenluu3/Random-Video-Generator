@@ -46,10 +46,20 @@ const Navigation = ({ children }: PropsWithChildren) => {
             justify='space-between'
           >
             <Navbar.Section>
-              <NavigationItem 
-                icon={<IconHome2 color={'skyblue'} size={26} />} 
-                label='HOME' routeTo={appRoutes.home} 
-              />
+              <Stack
+                spacing='xs'
+              >
+                <NavigationItem 
+                  icon={<IconHome2 color={'skyblue'} size={26} />} 
+                  label='HOME' routeTo={appRoutes.home} 
+                />
+                { account.loggedIn &&
+                  <NavigationItem 
+                    icon={<IconStar color={'gold'} size={26} />} 
+                    label='FAVORITES' routeTo={appRoutes.favorites.replace(':username', account.username)} 
+                  />
+                }
+              </Stack>
             </Navbar.Section>
             <Navbar.Section>
               { account.loggedIn &&

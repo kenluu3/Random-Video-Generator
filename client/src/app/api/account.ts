@@ -2,7 +2,7 @@ import { apiClient, apiRoutes, credentialsConfig } from './config';
 
 const accountAPI = {
   login: (payload: any) => {
-    return apiClient.post(apiRoutes.account.login, payload);
+    return apiClient.post(apiRoutes.account.login, payload, credentialsConfig);
   },
   register: (payload: any) => {
     return apiClient.post(apiRoutes.account.register, payload);

@@ -1,15 +1,25 @@
 import React from 'react';
 import { Accordion, Anchor, AspectRatio, Button, Center, Divider, Paper, Stack, Text } from '@mantine/core';
 import { IconStar } from '@tabler/icons';
-import { useAppSelector, useAppDispatch } from '../../app';
+import { useAppSelector, favoriteAPI } from '../../app';
 
 const Player = () => {
-  const dispatch = useAppDispatch();
   const account = useAppSelector((state) => state.account);
   const video = useAppSelector((state) => state.video);
 
-  const handleAddFavorite = () => {
-    console.log('Adding to Favorite');
+  const handleAddFavorite = async () => {
+    try {
+      if (video) {
+        const result = await favoriteAPI.add({
+          id: video.id,
+          title: video.title,
+          channel: video.channel,
+          channelId: video.channelId,
+        });
+      }
+    } catch (error: any) {
+      console.log(error);
+    }
   }
 
   return (

@@ -7,3 +7,5 @@ export * from './Common/ProfileCard';
 export * from './Home/Player';
 export * from './Home/TagsContainer';
 export * from './Home/TagItem';
+export * from './Favorites/FavoriteTable';
+export * from './Favorites/FavoriteItem';
