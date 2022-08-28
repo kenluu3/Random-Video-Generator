@@ -18,7 +18,7 @@ class Favorite extends BaseEntity {
   @Column()
   channelId: string
 
-  @CreateDateColumn()
+  @CreateDateColumn({ type: 'date' })
   saveDate: Date
 
   @ManyToOne(() => Account, account => account.favorite, {onDelete: 'CASCADE'})

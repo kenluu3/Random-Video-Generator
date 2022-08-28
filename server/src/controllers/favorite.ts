@@ -18,8 +18,15 @@ const getFavorite = async (req: Request, res: Response) => {
       return res.status(400).json({ error: 'Account does not exist' });
     }
 
-    const favorites = await Favorite.findBy({ accountId: account.id });
-  
+    const favorites = await Favorite.find({
+      select: {
+        accountId: false
+      },
+      where: { 
+        accountId: account.id 
+      }
+    });
+    
     return res.status(200).json(favorites);
   } catch (error: any) {
     return res.status(500).json({ error: 'Internal Server Error' });
