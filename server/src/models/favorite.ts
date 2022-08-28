@@ -15,6 +15,9 @@ class Favorite extends BaseEntity {
   @Column()
   channel: string
 
+  @Column()
+  channelId: string
+
   @CreateDateColumn()
   saveDate: Date
 
