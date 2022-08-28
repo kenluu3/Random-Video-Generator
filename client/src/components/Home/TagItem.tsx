@@ -1,23 +1,31 @@
-import React, { SyntheticEvent } from 'react';
+import React from 'react';
 import { Button } from '@mantine/core';
 import { IconX } from '@tabler/icons';
 import { tagsActions, useAppDispatch } from '../../app';
 
-const TagItem = (props: any) => {
+interface TagItemProps {
+  id: number,
+  label: string
+}
+
+const TagItem = ({ id, label }: TagItemProps) => {
   const dispatch = useAppDispatch();
 
-  const handleRemoveTag = (event: SyntheticEvent) => {
-    event.preventDefault();
-    dispatch(tagsActions.removeTag(props.id));
+  const handleRemoveTag = () => {
+    dispatch(tagsActions.removeTag(id));
   }
 
   return (
-    <Button rightIcon={<IconX />}
+    <Button
+      m={5}
+      variant='outline'
+      rightIcon={<IconX size={18} color={'red'} />}
       onClick={handleRemoveTag}
     >
-      {props.label}
+      {label}
     </Button>
   )
 }
 
-export { TagItem }
+export type { TagItemProps };
+export { TagItem };

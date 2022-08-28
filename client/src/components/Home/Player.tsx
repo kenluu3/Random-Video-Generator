@@ -1,47 +1,65 @@
-import React, { SyntheticEvent } from 'react';
-import { AspectRatio, Box, Paper, Group, Text, Button, Divider  } from '@mantine/core';
-import { useAppSelector, favoriteAPI } from '../../app';
+import React from 'react';
+import { Accordion, Anchor, AspectRatio, Button, Center, Divider, Paper, Stack, Text } from '@mantine/core';
+import { IconStar } from '@tabler/icons';
+import { useAppSelector, useAppDispatch } from '../../app';
 
 const Player = () => {
+  const dispatch = useAppDispatch();
   const account = useAppSelector((state) => state.account);
   const video = useAppSelector((state) => state.video);
 
-  const handleAddFavorite = async (event: SyntheticEvent) => {
-    event.preventDefault();
+  const handleAddFavorite = () => {
+    console.log('Adding to Favorite');
   }
 
   return (
-    <Box>
+    <Stack sx={{ height: '100%', width: '100%' }}>
       <AspectRatio ratio={16/9}>
-        <Paper>
-          <iframe 
-            style={{
-              width: '100%', 
-              height: '100%'
-            }}
-            frameBorder={0}
+        <Paper p='sm'>
+          <iframe
             src={`https://www.youtube.com/embed/${video.id}`}
+            style={{ width: '100%', height: '100%' }}
+            frameBorder={0}
             allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
             allowFullScreen
           />
         </Paper>
       </AspectRatio>
-      <Group position='apart'>
-        <Text>{video.title}</Text>
-        { account.loggedIn &&
-          <Button onClick={handleAddFavorite}>Add to Favorites</Button>
-        } 
-      </Group>
-      <Divider color={'white'} />
-      <Box>
-        <Text>
-          <a href={`https://www.youtube.com/channel/${video.channelID}`}>{video.channel}</a>
-        </Text>
-        <Text>
-          {video.description}
-        </Text>
-      </Box>
-    </Box>
+      { account.loggedIn &&
+        <Center>
+          <Button
+            variant='subtle'
+            rightIcon={<IconStar color={'gold'} fill={'gold'} stroke={1} />}
+            onClick={handleAddFavorite}
+          >
+            Add To Favorites
+          </Button>
+        </Center>
+      }
+      <Divider size='sm' />
+      <Accordion
+        variant='filled'
+      >
+        <Accordion.Item value='title'>
+          <Accordion.Control>
+            <Text weight={700}>
+              {video.title}
+            </Text>
+          </Accordion.Control>
+          <Accordion.Panel>
+            <Divider mt='xs' mb='xs' />
+            <Text weight={700}>
+              <Anchor href={`https://www.youtube.com/c/${video.channelID}`}>
+                {video.channel}
+              </Anchor>
+            </Text>
+            <Text>
+              {video.description}
+            </Text>
+          </Accordion.Panel>
+        </Accordion.Item>
+      </Accordion>
+    </Stack>
   )
 }
 

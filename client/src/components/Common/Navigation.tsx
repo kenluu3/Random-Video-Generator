@@ -37,7 +37,7 @@ const Navigation = ({ children }: PropsWithChildren) => {
       }
       navbar={
         <Navbar 
-          width={{ base: 220 }}
+          width={{ base: 200 }}
           p='lg' hiddenBreakpoint='sm'
           hidden={!hiddenNavbar}
         >

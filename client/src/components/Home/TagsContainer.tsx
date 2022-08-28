@@ -1,60 +1,67 @@
-import React, { SyntheticEvent, useState } from 'react';
-import { Box, Button, Stack, TextInput } from '@mantine/core';
-import { tagsActions, useAppSelector, useAppDispatch } from '../../app';
-import { IconFilter, IconPlus, IconClearAll } from '@tabler/icons';
+import React, { SyntheticEvent, KeyboardEvent, useState } from 'react';
+import { Box, Button, Group, Stack, TextInput } from '@mantine/core';
+import { tagsActions, useAppDispatch, useAppSelector } from '../../app';
+import { IconPlus, IconClearAll, IconFilter } from '@tabler/icons';
 import { TagItem } from './TagItem';
 
 const TagsContainer = () => {
-  const [tagInput, setTagInput] = useState('');
-  const tags = useAppSelector((state) => state.tags);
   const dispatch = useAppDispatch();
-
-  const tagsListComponent = tags.map((tag, i) => <TagItem key={i} id={i} label={tag} />)
+  const tags = useAppSelector((state) => state.tags);
+  const [tagInput, setTagInput] = useState('');
 
   const handleTagInputChange = (event: SyntheticEvent) => {
     setTagInput((event.target as HTMLInputElement).value);
   }
-  
-  const handleSubmitTag = (event: any) => {
-    if (event.key === 'Enter' && tagInput) {
+
+  const handleTagSubmit = (event: KeyboardEvent) => {
+    if (tagInput && event.key === 'Enter') {
       dispatch(tagsActions.addTag(tagInput));
       setTagInput('');
     }
   }
 
-  const handleAddTag = (event: SyntheticEvent) => {
-    event.preventDefault();
-
+  const handleTagAdd = () => {
     if (tagInput) {
       dispatch(tagsActions.addTag(tagInput));
       setTagInput('');
     }
   }
 
-  const handleClearTag = (event: SyntheticEvent) => {
-    event.preventDefault();
-
+  const handleClearTag = () => {
     dispatch(tagsActions.clearTags());
   }
 
   return (
-    <Stack>
+    <Stack spacing='xs'>
       <TextInput
         icon={<IconFilter />}
-        variant='filled'
         value={tagInput}
-        placeholder='Add tags to narrow randomized result'
+        variant='filled'
+        placeholder='Add tags to narrow results'
         onChange={handleTagInputChange}
-        onKeyDown={handleSubmitTag}
+        onKeyDown={handleTagSubmit}
       />
-      <Button onClick={handleAddTag} rightIcon={<IconPlus />}>Add</Button>
-      <Button onClick={handleClearTag} rightIcon={<IconClearAll />}>Clear</Button>
+      <Group position='apart'>
+        <Button
+          rightIcon={<IconClearAll stroke={1} />}
+          variant='subtle'
+          onClick={handleClearTag}
+        >
+          Clear
+        </Button>
+        <Button
+          rightIcon={<IconPlus stroke={1} />}
+          variant='subtle'
+          onClick={handleTagAdd}
+        >
+          Add
+        </Button>
+      </Group>
       <Box>
-        {tagsListComponent}
+        {tags.map((label, i) => <TagItem key={i} id={i} label={label} />)}
       </Box>
     </Stack>
   )
-
 }
 
 export { TagsContainer };
