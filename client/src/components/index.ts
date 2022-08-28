@@ -9,3 +9,4 @@ export * from './Home/TagsContainer';
 export * from './Home/TagItem';
 export * from './Favorites/FavoriteTable';
 export * from './Favorites/FavoriteItem';
+export * from './Profile/ProfileForm';

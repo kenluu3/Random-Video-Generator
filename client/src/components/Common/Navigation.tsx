@@ -1,6 +1,6 @@
 import React, { PropsWithChildren, useState } from 'react';
 import { AppShell, Box, Burger, Divider, Header, Navbar, MediaQuery, Group, Stack, } from '@mantine/core';
-import { IconHome2, IconStar, IconLogin, IconLogout } from '@tabler/icons';
+import { IconHome2, IconStar, IconLogin, IconLogout, IconUser } from '@tabler/icons';
 import { Logo } from './Logo';
 import { ProfileCard } from './ProfileCard';
 import { NavigationItem } from './NavigationItem';
@@ -54,9 +54,15 @@ const Navigation = ({ children }: PropsWithChildren) => {
                   label='HOME' routeTo={appRoutes.home} 
                 />
                 { account.loggedIn &&
+                  <NavigationItem
+                    icon={<IconStar color={'gold'} size={26} />}
+                    label='FAVORITES' routeTo={appRoutes.favorites.replace(':username', account.username)}
+                  />
+                }
+                { account.loggedIn &&
                   <NavigationItem 
-                    icon={<IconStar color={'gold'} size={26} />} 
-                    label='FAVORITES' routeTo={appRoutes.favorites.replace(':username', account.username)} 
+                    icon={<IconUser color={'lightblue'} size={26} />}
+                    label='PROFILE' routeTo={appRoutes.user.replace(':username', account.username)}
                   />
                 }
               </Stack>
