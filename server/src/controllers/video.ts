@@ -36,7 +36,7 @@ const getVideo = async (req: Request, res: Response) => {
       title: items[randIndex].snippet?.title,
       description: items[randIndex].snippet?.description,
       channel: items[randIndex].snippet?.channelTitle,
-      channelID: items[randIndex].snippet?.channelId,
+      channelId: items[randIndex].snippet?.channelId,
     }
 
     return res.status(200).json(video);
