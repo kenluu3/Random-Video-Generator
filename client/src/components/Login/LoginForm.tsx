@@ -1,14 +1,14 @@
-import React, { SyntheticEvent } from 'react';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Button, Center, Paper, Stack, TextInput, PasswordInput, Text } from '@mantine/core';
-import { Logo } from '../Common/Logo';
-import { IconUser, IconLock } from '@tabler/icons';
+import { Button, Center, Paper, TextInput, Text, PasswordInput, Stack, Divider } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { useAppDispatch, accountActions, appRoutes } from '../../app';
+import { IconUser, IconLock } from '@tabler/icons';
+import { Logo } from '../Common/Logo';
+import { accountActions, appRoutes, useAppDispatch } from '../../app';
 
 const LoginForm = () => {
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const form = useForm({
     initialValues: {
@@ -41,9 +41,7 @@ const LoginForm = () => {
     }
   });
 
-  const handleLogin = async (event: SyntheticEvent) => {
-    event.preventDefault();
-
+  const handleLogin = async () => {
     if (!form.validate().hasErrors) {
       const result = await dispatch(accountActions.accountLogin(form.values));   
       
@@ -56,31 +54,50 @@ const LoginForm = () => {
   }
 
   return (
-    <Paper>
+    <Paper
+      p='xl'
+      sx={{
+        width: '450px',
+        height: '500px',
+      }}
+    >
       <Stack>
-        <Center>
-          <Logo />
-        </Center>
-        <form onSubmit={handleLogin}>
-          <Stack>
+        <Stack
+          spacing={0}
+          sx={{
+            width: '100%',
+          }}
+        >
+          <Center>
+            <Logo size={40} />
+          </Center>
+          <Divider size='sm' />
+          <Text size={24} weight={700}>
+            LOGIN
+          </Text>
+        </Stack>
+        <form>
+          <Stack spacing='md'>
             <TextInput
               icon={<IconUser />}
-              variant='filled'
               placeholder='Username'
-              autoComplete='true'
+              variant='filled'
               {...form.getInputProps('username')}
             />
-            <PasswordInput 
-              icon={<IconLock />} 
-              variant='filled' 
+            <PasswordInput
+              icon={<IconLock />}
               placeholder='Password'
-              autoComplete='true'
+              variant='filled'
               {...form.getInputProps('password')}
             />
-            <Stack spacing={0}>
-              <Button type='submit'>Login</Button>
+            <Stack spacing={5}>
+              <Button
+                onClick={handleLogin}
+              >
+                Login
+              </Button>
               <Text>
-                Don't have an account? Click <Link to={appRoutes.register}>here</Link> to create an account
+                Don't have an account? Click <Link to={appRoutes.register} style={{textDecoration: 'none'}}>here</Link> to register
               </Text>
             </Stack>
           </Stack>

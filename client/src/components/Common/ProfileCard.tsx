@@ -13,7 +13,7 @@ const ProfileCard = ({ username }: ProfileCardProps) => {
         variant='filled'
         radius='xl'
       >
-        {username.substring(0,2)}
+        {username.substring(0,2).toUpperCase()}
       </Avatar>
       <Text 
         weight={700} transform='uppercase'

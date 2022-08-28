@@ -62,7 +62,7 @@ const Navigation = ({ children }: PropsWithChildren) => {
               }
               <Divider mt='md' mb='md'/>
               { account.loggedIn
-                ? <ProfileCard username='username' />
+                ? <ProfileCard username={account.username} />
                 : <NavigationItem
                     icon={<IconLogin color={'lightgreen'} size={26} />}
                     label='LOGIN' routeTo={appRoutes.login}

@@ -31,6 +31,16 @@ const baseTheme = {
         withBorder: true,
       }
     },
+    TextInput: {
+      defaultProps: {
+        autoComplete: 'true',
+      }
+    },
+    PasswordInput: {
+      defaultProps: {
+        autoComplete: 'true',
+      }
+    }
   }
 }
 

@@ -1,9 +1,9 @@
-import React, { SyntheticEvent } from 'react';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Button, Center, Paper, Stack, TextInput, PasswordInput, Text } from '@mantine/core';
-import { Logo } from '../Common/Logo';
-import { IconUser, IconLock } from '@tabler/icons';
+import { Button, Center, Paper, Stack, TextInput, PasswordInput, Text, Divider } from '@mantine/core';
 import { useForm } from '@mantine/form';
+import { IconAt, IconUser, IconLock } from '@tabler/icons';
+import { Logo } from '../Common/Logo';
 import { accountAPI, appRoutes } from '../../app';
 
 const RegisterForm = () => {
@@ -56,21 +56,15 @@ const RegisterForm = () => {
           return 'Passwords did not match'
       }
     }
-  })
+  });
 
-  const handleRegister = async (event: SyntheticEvent) => {
-    event.preventDefault();
-    
+  const handleRegister = async () => {    
     if (!form.validate().hasErrors) {
       try {
         const response = await accountAPI.register(form.values);
-
-        if (response.status === 200) 
-          navigate(appRoutes.login);
-
+        if (response.status === 200) navigate(appRoutes.login);
       } catch (error: any) {
         const { response } = error;
-
         if (response.status === 400) {          
           if (response.data.error[0].param === 'username')
             form.setFieldError('username', response.data.error[0].msg);
@@ -83,46 +77,62 @@ const RegisterForm = () => {
   }
 
   return (
-    <Paper>
+    <Paper
+      p ='xl'
+      sx={{
+        width: '450px',
+        height: '500px',
+      }}
+    >
       <Stack>
-        <Center>
-          <Logo />
-        </Center>
+        <Stack
+          spacing={0}
+          sx={{
+            width: '100%',
+          }}
+          >
+          <Center>
+            <Logo size={40} />
+          </Center>
+          <Divider size='sm' />
+          <Text size={24} weight={700}>
+            REGISTRATION
+          </Text>
+        </Stack>
         <form>
-          <Stack>
-            <TextInput 
-              icon={<IconUser />} 
-              variant='filled'
+          <Stack spacing='sm'>
+            <TextInput
+              icon={<IconAt />}
               placeholder='Email'
-              type='email'
-              autoComplete='true'
+              variant='filled'
               {...form.getInputProps('email')}
             />
-            <TextInput 
-              icon={<IconUser />} 
-              variant='filled'
+            <TextInput
+              icon={<IconUser />}
               placeholder='Username'
-              autoComplete='true'
+              variant='filled'
               {...form.getInputProps('username')}
             />
-            <PasswordInput 
-              icon={<IconLock />} 
-              variant='filled' 
+            <PasswordInput
+              icon={<IconLock />}
               placeholder='Password'
-              autoComplete='true'
+              variant='filled'
               {...form.getInputProps('password')}
             />
-            <PasswordInput 
-              icon={<IconLock />} 
-              variant='filled' 
+            <PasswordInput
+              icon={<IconLock />}
               placeholder='Confirm Password'
-              autoComplete='true'
+              variant='filled'
               {...form.getInputProps('confirmPassword')}
             />
-            <Stack spacing={0}>
-              <Button onClick={handleRegister}>Register</Button>
+            <Stack spacing={5}>
+              <Button
+                onClick={handleRegister}
+              >
+                Register
+              </Button>
               <Text>
-                Already have an account? Click <Link to={appRoutes.login}>here</Link> to login
+                Already have an account? Click <Link to={appRoutes.login} style={{textDecoration: 'none'}}>here</Link> to login
               </Text>
             </Stack>
           </Stack>
