@@ -5,6 +5,9 @@ const initialState = {
   loading: false,
   loggedIn: false,
   username: '',
+  email: '',
+  active: false,
+  registerDate: '',
 }
 
 const accountLogin = createAsyncThunk(
@@ -20,7 +23,7 @@ const accountSlice = createSlice({
   initialState,
   reducers: {
     accountLogout: () => {
-      return {loading: false, loggedIn: false, username: ''}
+      return {loading: false, loggedIn: false, username: '', email: '', active: false, registerDate: ''}
     }
   },
   extraReducers: (builder) => {
@@ -28,7 +31,8 @@ const accountSlice = createSlice({
       return {...state, loading: true };
     }),
     builder.addCase(accountLogin.fulfilled, (state, action) => {
-      return {...state, loggedIn: true, username: action.payload.username};
+      const { username, email, active, createDate } = action.payload.user;
+      return {...state, loading: false, loggedIn: true, username: username, email: email, active: active, registerDate: createDate };
     }),
     builder.addCase(accountLogin.rejected, () => {
       return initialState;
