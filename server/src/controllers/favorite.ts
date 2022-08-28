@@ -19,12 +19,8 @@ const getFavorite = async (req: Request, res: Response) => {
     }
 
     const favorites = await Favorite.find({
-      select: {
-        accountId: false
-      },
-      where: { 
-        accountId: account.id 
-      }
+      select: ['id', 'title', 'channel', 'channelId', 'saveDate'],
+      where: { accountId: account.id }
     });
     
     return res.status(200).json(favorites);

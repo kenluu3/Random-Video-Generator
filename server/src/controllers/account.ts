@@ -15,12 +15,8 @@ const getAccount = async (req: Request, res: Response) => {
 
   try {
     const account = await Account.findOne({ 
-        select: {
-          id: false,
-        }, 
-        where: {
-          username: username,
-        }
+        select: ['username', 'email', 'active', 'createDate'],
+        where: { username: username }
       });
 
     if (!account) {
