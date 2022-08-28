@@ -33,7 +33,7 @@ const addFavorite = async (req: Request, res: Response) => {
     return res.status(400).json({ error: validationError.array() });
   }
 
-  const { id, title, channel } = req.body;
+  const { id, title, channel, channelId } = req.body;
   const credentials = req.user;
 
   try {
@@ -42,11 +42,13 @@ const addFavorite = async (req: Request, res: Response) => {
     favorite.title = title;
     favorite.channel = channel;
     favorite.accountId = credentials?.id as string;
+    favorite.channelId = channelId;
 
     await favorite.save();
 
     return res.status(200).json({ message: 'Added to favorites successfully' });
   } catch (error: any) {
+    console.log(error);
     return res.status(500).json({ error: 'Internal Server Error' });
   }
 }
