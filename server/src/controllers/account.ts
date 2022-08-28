@@ -14,7 +14,14 @@ const getAccount = async (req: Request, res: Response) => {
   const { username } = req.params;
 
   try {
-    const account = await Account.findOneBy({ username: username });
+    const account = await Account.findOne({ 
+        select: {
+          id: false,
+        }, 
+        where: {
+          username: username,
+        }
+      });
 
     if (!account) {
       return res.status(400).json({ error: 'Account does not exist' });

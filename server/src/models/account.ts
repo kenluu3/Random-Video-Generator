@@ -18,7 +18,7 @@ class Account extends BaseEntity {
   @Column({ default: true })
   active: boolean
   
-  @CreateDateColumn()
+  @CreateDateColumn({ type: 'date' })
   createDate: Date;
 
   @OneToMany(() => Favorite, favorite => favorite.accountId)
