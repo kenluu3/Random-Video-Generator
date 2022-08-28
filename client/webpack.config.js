@@ -18,6 +18,10 @@ module.exports = {
         test: /\.(png|svg|jpg|jpeg|gif|webp)$/i,
         type: 'asset/resource',
       },
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
+      },
     ]
   },
   resolve: {
@@ -25,12 +29,13 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '[name].[contenthash].js'
+    filename: '[name].[contenthash].js',
+    publicPath: '/',
   },
   devtool: 'source-map',
   devServer: {
     static: {
-      directory: path.join(__dirname, 'public')
+      directory: path.join(__dirname, 'public'),
     },
     port: 3000,
     hot: true,
@@ -40,6 +45,8 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'Random Video Generator',
       template: path.join(__dirname, 'public/index.html'),
+      favicon: path.join(__dirname, 'public/favicon.ico'),
+      inject: true
     })
   ],
 };
