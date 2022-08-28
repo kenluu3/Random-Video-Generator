@@ -81,6 +81,9 @@ const updateAccount = async (req: Request, res: Response) => {
     const newPayload = { 
       id: account.id,
       username: account.username,
+      email: account.email,
+      active: account.active,
+      createDate: account.createDate,
     }
 
     const token = generateToken(newPayload);
@@ -117,14 +120,17 @@ const loginAccount = async (req: Request, res: Response) => {
 
     const payload = {
       id: account.id,
-      username: account.username
+      username: account.username,
+      email: account.email,
+      active: account.active,
+      createDate: account.createDate
     }
 
     const token = generateToken(payload)
 
     return res.status(200)
       .cookie('token', token, { httpOnly: true, secure: false })
-      .json({ message: 'Logged in successfully', username: payload.username });
+      .json({ message: 'Logged in successfully', user: payload });
   } catch (error: any) {
     return res.status(500).json({ error: 'Internal Server Error' });
   }
