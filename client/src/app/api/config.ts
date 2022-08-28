@@ -8,6 +8,10 @@ const apiClient = axios.create({
   }
 })
 
+const credentialsConfig = {
+  withCredentials: true,
+}
+
 const apiRoutes = {
   account: {
     get: '/account',
@@ -25,4 +29,4 @@ const apiRoutes = {
   },
 }
 
-export { apiClient, apiRoutes };
+export { apiClient, apiRoutes, credentialsConfig };

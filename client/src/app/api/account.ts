@@ -1,4 +1,4 @@
-import { apiClient, apiRoutes } from './config';
+import { apiClient, apiRoutes, credentialsConfig } from './config';
 
 const accountAPI = {
   login: (payload: any) => {
@@ -8,7 +8,7 @@ const accountAPI = {
     return apiClient.post(apiRoutes.account.register, payload);
   },
   update: (payload: any) => {
-    return apiClient.patch(apiRoutes.account.update, payload);
+    return apiClient.patch(apiRoutes.account.update, payload, credentialsConfig);
   },
   get: (username: string) => {
     return apiClient.get(`${apiRoutes.account.get}/${username}`);

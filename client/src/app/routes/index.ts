@@ -3,6 +3,7 @@ const appRoutes = {
   login: '/login',
   register: '/register',
   user: '/user/:username',
+  favorites: '/user/:username/favorites',
 }
 
 export { appRoutes };
