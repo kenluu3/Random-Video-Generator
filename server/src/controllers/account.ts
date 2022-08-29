@@ -90,7 +90,7 @@ const updateAccount = async (req: Request, res: Response) => {
 
     return res.status(200)
     .cookie('token', token, { httpOnly: true, secure: false })
-    .json({ message: 'Updated account information successfully' });
+    .json({ message: 'Updated account information successfully', user: newPayload });
   } catch (error: any) {
     return res.status(500).json({ error: 'Internal Server Error' });
   }

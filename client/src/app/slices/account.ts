@@ -18,6 +18,14 @@ const accountLogin = createAsyncThunk(
   }
 )
 
+const accountUpdate = createAsyncThunk(
+  'account/accountUpdate',
+  async (payload: any) => {
+    const response = await accountAPI.update(payload);
+    return response.data;
+  }
+)
+
 const accountSlice = createSlice({
   name: 'account',
   initialState,
@@ -36,9 +44,13 @@ const accountSlice = createSlice({
     }),
     builder.addCase(accountLogin.rejected, () => {
       return initialState;
+    }),
+    builder.addCase(accountUpdate.fulfilled, (state, action) => {
+      const { username, email } = action.payload.user;
+      return {...state, username: username, email: email }
     })
   }
 })
 
 export const accountReducer = accountSlice.reducer;
-export const accountActions = { ...accountSlice.actions, accountLogin };
+export const accountActions = { ...accountSlice.actions, accountLogin, accountUpdate };

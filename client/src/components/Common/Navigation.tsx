@@ -1,18 +1,34 @@
-import React, { PropsWithChildren, useState } from 'react';
-import { AppShell, Box, Burger, Divider, Header, Navbar, MediaQuery, Group, Stack, } from '@mantine/core';
-import { IconHome2, IconStar, IconLogin, IconLogout, IconUser } from '@tabler/icons';
+import React, { KeyboardEvent, PropsWithChildren, SyntheticEvent, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AppShell, Box, Burger, Divider, Header, Navbar, MediaQuery, Group, Stack, TextInput, Switch } from '@mantine/core';
+import { IconHome2, IconStar, IconLogin, IconLogout, IconUser, IconSearch } from '@tabler/icons';
 import { Logo } from './Logo';
 import { ProfileCard } from './ProfileCard';
 import { NavigationItem } from './NavigationItem';
 import { accountActions, appRoutes, useAppDispatch, useAppSelector } from '../../app';
 
 const Navigation = ({ children }: PropsWithChildren) => {
+  const navigate = useNavigate();
+  const [searchInput, setSearchInput] = useState('');
   const [hiddenNavbar, setHiddenNavbar] = useState(false);
   const account = useAppSelector((state) => state.account);
   const dispatch = useAppDispatch();
 
   const handleLogout = () => {
     dispatch(accountActions.accountLogout());
+  }
+
+  const handleSearchInputChange = (event: SyntheticEvent) => {
+    setSearchInput((event.target as HTMLInputElement).value);
+  }
+
+  const handleSearch = (event: KeyboardEvent) => {
+    if (searchInput && event.key === 'Enter') {
+      if (searchInput.length >= 5 && searchInput.length <= 25) {
+        setSearchInput('');
+        navigate(appRoutes.favorites.replace(':username', searchInput.toLowerCase()));
+      }
+    }
   }
   
   return (
@@ -32,6 +48,13 @@ const Navigation = ({ children }: PropsWithChildren) => {
             <Box sx={{ marginRight: 'auto' }}>
               <Logo />
             </Box>
+            <TextInput 
+              icon={<IconSearch />}
+              placeholder='Search user'
+              value={searchInput}
+              onChange={handleSearchInputChange}
+              onKeyDown={handleSearch}
+            />
           </Group>
         </Header>
       }
