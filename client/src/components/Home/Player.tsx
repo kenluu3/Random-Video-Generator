@@ -1,5 +1,6 @@
 import React from 'react';
 import { Accordion, Anchor, AspectRatio, Button, Center, Divider, Paper, Stack, Text } from '@mantine/core';
+import { showNotification } from '@mantine/notifications';
 import { IconStar } from '@tabler/icons';
 import { useAppSelector, favoriteAPI } from '../../app';
 
@@ -16,9 +17,19 @@ const Player = () => {
           channel: video.channel,
           channelId: video.channelId,
         });
+
+        if (result.status === 200) {
+          showNotification({
+            message: 'Successfully saved video to favorites.',
+            autoClose: 2000,
+          })
+        }
       }
     } catch (error: any) {
-      console.log(error);
+      showNotification({
+        message: 'Server error, failed to save video to favorites. Please try again later.',
+        autoClose: 2000,
+      })
     }
   }
 

@@ -6,7 +6,7 @@ const initialState = {
   title: '',
   description: '',
   channel: '',
-  channelID: ''
+  channelId: ''
 }
 
 const retrieveVideo = createAsyncThunk(

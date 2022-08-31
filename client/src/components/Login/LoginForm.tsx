@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, Center, Paper, TextInput, Text, PasswordInput, Stack, Divider } from '@mantine/core';
+import { showNotification } from '@mantine/notifications'; 
 import { useForm } from '@mantine/form';
 import { IconUser, IconLock } from '@tabler/icons';
 import { Logo } from '../Common/Logo';
@@ -49,6 +50,10 @@ const LoginForm = () => {
         form.setErrors({ username: 'Invalid credentials entered', password: 'Invalid credentials entered' });
       } else if (accountActions.accountLogin.fulfilled.match(result)) {
         navigate(appRoutes.home);
+        showNotification({
+          message: 'You have logged in successfully.',
+          autoClose: 2000,
+        })
       }
     }
   }

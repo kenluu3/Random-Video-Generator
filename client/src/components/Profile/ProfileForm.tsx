@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Group, Button, Paper, TextInput, PasswordInput, Stack, Switch, Text, Divider } from '@mantine/core';
+import { showNotification } from '@mantine/notifications';
 import { useForm } from '@mantine/form';
 import { useAppSelector, useAppDispatch, accountActions } from '../../app';
 
@@ -87,6 +88,11 @@ const ProfileForm = () => {
       if (updateFlag) {
         await dispatch(accountActions.accountUpdate(updateValues));
         setEdit(!edit);
+
+        showNotification({
+          message: 'Sucessfully updated profile information',
+          autoClose: 2000,
+        })
       }
     }
   }

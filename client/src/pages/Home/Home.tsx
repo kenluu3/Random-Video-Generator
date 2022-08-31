@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Group, Box, Button, Stack } from '@mantine/core';
+import { Box, Button, Stack } from '@mantine/core';
 import { Navigation, Player, TagsContainer } from '../../components';
 import { IconPlayerPlay } from '@tabler/icons';
 import { videoActions, useAppDispatch, useAppSelector } from '../../app';
@@ -7,14 +7,17 @@ import { videoActions, useAppDispatch, useAppSelector } from '../../app';
 const Home = () => {
   const dispatch = useAppDispatch();
   const tags = useAppSelector((state) => state.tags);
+  const video = useAppSelector((state) => state.video);
 
   const handleGenerate = () => {
     dispatch(videoActions.retrieveVideo(tags));
   }
 
   useEffect(() => {
-    dispatch(videoActions.retrieveVideo(tags));
-  })
+    if (!video.id) {
+      dispatch(videoActions.retrieveVideo(tags));
+    }
+  }, [])
 
   return (
     <Navigation>
@@ -34,7 +37,6 @@ const Home = () => {
         <Box
           sx={{
             width: '70%',
-
             '@media (max-width: 768px)': {
               width: '100%',
               marginBottom: '12px',
@@ -46,7 +48,6 @@ const Home = () => {
         <Stack
           sx={{
             width: '29%',
-
             '@media (max-width: 768px)': {
               width: '100%',
             }
