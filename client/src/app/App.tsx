@@ -24,7 +24,7 @@ const App = () => {
             <Route path={appRoutes.login} element={<Login />} />
             <Route path={appRoutes.register} element={<Register />} />
             <Route path={appRoutes.favorites} element={<Favorites />} />
-            <Route path={appRoutes.user} element={account.loggedIn ? <Profile /> : <Home />} />
+            <Route path={appRoutes.user} element={account.loggedIn ? <Profile /> : <Error />} />
             <Route path={'*'} element={<Error />} />
           </Routes>
         </BrowserRouter>
