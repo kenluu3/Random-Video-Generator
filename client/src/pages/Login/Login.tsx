@@ -1,16 +1,12 @@
 import React from 'react';
-import { Center } from '@mantine/core';
 import { LoginForm } from '../../components';
+import '../../styles/base-page.scss';
 
 const Login = () => {
   return (
-    <Center
-      sx={{
-        height: '100vh'
-      }}
-    >
+    <div className='page-container'>
       <LoginForm />
-    </Center>
+    </div>
   )
 }
 

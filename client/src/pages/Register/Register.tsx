@@ -1,16 +1,12 @@
 import React from 'react';
-import { Center } from '@mantine/core';
 import { RegisterForm } from '../../components';
+import '../../styles/base-page.scss';
 
 const Register = () => {
   return (
-    <Center
-      sx={{
-        height: '100vh',
-      }}
-    >
+    <div className='page-container'>
       <RegisterForm />
-    </Center>
+    </div>
   )
 }
 
