@@ -20,9 +20,13 @@ const accountLogin = createAsyncThunk(
 
 const accountUpdate = createAsyncThunk(
   'account/accountUpdate',
-  async (payload: any) => {
-    const response = await accountAPI.update(payload);
-    return response.data;
+  async (payload: any, { rejectWithValue }) => { 
+    try {
+      const response = await accountAPI.update(payload);
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response.data.error[0]);
+    }
   }
 )
 

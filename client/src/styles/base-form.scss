@@ -18,4 +18,9 @@
     @extend .form;
     height: 70%;
   }
+
+  &-profile {
+    @extend .form;
+    height: 100%;
+  }
 }

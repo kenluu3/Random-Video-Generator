@@ -1,159 +1,115 @@
 import React, { useState } from 'react';
-import { Group, Button, Paper, TextInput, PasswordInput, Stack, Switch, Text, Divider } from '@mantine/core';
-import { showNotification } from '@mantine/notifications';
+import { Button, Group, Paper, PasswordInput, Stack, Switch, Title, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { useAppSelector, useAppDispatch, accountActions } from '../../app';
+import { showNotification } from '@mantine/notifications';
+import { IconAt, IconCalendar, IconUser, IconLock } from '@tabler/icons';
+import { accountActions, useAppSelector, useAppDispatch, profileValidation } from '../../app';
+import '../../styles/base-form.scss';
 
 const ProfileForm = () => {
   const account = useAppSelector((state) => state.account);
   const dispatch = useAppDispatch();
-  const [edit, setEdit] = useState(true);
+  const [edit, setEdit] = useState(false);
 
-  const form = useForm({
-    initialValues: {
-      email: '',
-      username: '',
-      password: '',
+  const form = useForm({ 
+    initialValues: { email: '', username: '',  password: '' },
+    initialDirty: { email: false, username: false, password: false },
+    validate: { 
+      email: profileValidation.email,
+      username: profileValidation.username, 
+      password: profileValidation.password,
     },
-    initialDirty: {
-      email: false,
-      username: false,
-      password: false,
-    },
-    validate: {
-      email: (value) => {
-        const trimEmail = value.trim();
-
-        if (trimEmail.length == 0)
-          return 'Email field cannot be empty';
-
-        const emailRegex = new RegExp(/^\S+@\S+$/);
-        if (!emailRegex.test(trimEmail)) 
-          return 'Invalid email'  
-      }, 
-      username: (value) => {
-        const trimUsername = value.trim();
-
-        if (trimUsername.length == 0)
-          return 'Username field cannot be empty';
-      
-        if (trimUsername.length < 5 || trimUsername.length > 25)
-          return 'Username must be between 5 and 25 characters';
-
-        const alphaNumRegex = new RegExp(/^[a-z0-9]+$/i);
-        if (!alphaNumRegex.test(trimUsername))
-          return 'Username must contain only alphanumeric characters';
-      },
-      password: (value) => {
-        const trimPassword = value.trim();
-
-        if (trimPassword.length == 0) 
-          return 'Password field cannot be empty';
-      
-        if (trimPassword.length < 5 || trimPassword.length > 25) 
-          return 'Password must be between 5 and 25 characters';
-      },
-    }
   })
 
-  const handleUpdateAccount = async () => {
-    let updateValues = {};
-    let updateFlag = true;
+  const update = async () => {
+    let values = {};
 
     if (form.isDirty()) {
-      if (form.isDirty('email')) {
-        if (form.validateField('email') && form.isValid('email')) {
-          updateValues = { ...updateValues, email: form.values.email };
+      if (form.isDirty('email') && form.validateField('email') && form.isValid('email'))
+        if (form.values.email.toLowerCase() !== account.email)
+          values = { ...values, email: form.values.email };
+      if (form.isDirty('username') && form.validateField('username') && form.isValid('username'))
+        if (form.values.username.toLowerCase() !== account.username)
+          values = { ...values, username: form.values.username };
+      if (form.isDirty('password') && form.validateField('password') && form.isValid('password'))
+        values = { ...values, password: form.values.password };
+      
+      if (Object.keys(values)) {
+        const response = await dispatch(accountActions.accountUpdate(values));   
+
+        if (accountActions.accountUpdate.rejected.match(response)) {
+          const error = response.payload as any;
+
+          if (error.param === 'username')
+            form.setFieldError('username', error.msg);
+          if (error.param === 'email')
+            form.setFieldError('email', error.msg);
         } else {
-          updateFlag = false;
+          showNotification({ message: response.payload.message, autoClose: 2000 });
+          setEdit(!edit);
         }
-      }
-
-      if (form.isDirty('username')) {
-        if (form.validateField('username') && form.isValid('username')) {
-          updateValues = { ...updateValues, username: form.values.username };
-        } else {
-          updateFlag = false;
-        }
-      }
-
-      if (form.isDirty('password')) {
-        if (form.validateField('password') && form.isValid('password')) {
-          updateValues = { ...updateValues, password: form.values.password };
-        } else {
-          updateFlag = false;
-        }
-      }
-
-      if (updateFlag) {
-        await dispatch(accountActions.accountUpdate(updateValues));
-        setEdit(!edit);
-
-        showNotification({
-          message: 'Sucessfully updated profile information',
-          autoClose: 2000,
-        })
       }
     }
   }
 
-  const handleFormReset = () => {
-    form.reset();
-  }
+  const reset = () => form.reset();
+  const toggleEdit = () => setEdit(!edit);
 
   return (
-    <Stack p={120}>
-      <Group
-        position='apart'
-      >
-        <Text size={32} weight={700} transform='uppercase'>
-            PROFILE INFORMATION
-        </Text>
+    <Stack>
+      <Group position='apart'>
+        <Title order={1}>ACCOUNT SETTINGS</Title>
         <Group>
-          <Button variant='subtle' onClick={handleFormReset}>Reset Form</Button>
-          <Switch onClick={() => setEdit(!edit)} label='TOGGLE EDIT MODE' />
+          <Switch onClick={toggleEdit} label='TOGGLE EDIT' />
+          <Button onClick={reset} variant='subtle'>Reset Form</Button>
         </Group>
       </Group>
-      <Divider size='sm' />
-      <Paper>
-        <form>
-          <Stack spacing='sm'>
+      <Paper m='xl' p='md'>
+        <form className='form-profile'>
+          <TextInput
+            icon={<IconAt />}
+            label='EMAIL'
+            placeholder={account.email.toUpperCase()}
+            {...form.getInputProps('email')}
+            disabled={!edit}
+            autoComplete='true'
+          />
+          <TextInput
+            icon={<IconUser />}
+            label='USERNAME'
+            placeholder={account.username.toUpperCase()}
+            {...form.getInputProps('username')}
+            disabled={!edit}
+            autoComplete='true'
+          />
+          <PasswordInput
+            icon={<IconLock />}
+            label='PASSWORD'
+            placeholder='SET NEW PASSWORD' 
+            {...form.getInputProps('password')}
+            disabled={!edit}
+            autoComplete='true'
+          />
+          <Group position='apart' grow mb='xl'>
             <TextInput
-              label='USERNAME'
-              placeholder={account.username.toUpperCase()}
-              disabled={edit}
-              {...form.getInputProps('username')}
-            />
-            <TextInput
-              label='EMAIL'
-              placeholder={account.email.toUpperCase()}
-              disabled={edit}
-              {...form.getInputProps('email')}
-            />
-            <PasswordInput
-              label='PASSWORD'
-              placeholder='ENTER PASSWORD TO CHANGE CURRENT PASSWORD'
-              disabled={edit}
-              {...form.getInputProps('password')}
-            />
-            <TextInput
-              label='ACTIVE'
-              placeholder={'TRUE'}
-              disabled
-            />
-            <TextInput
+              icon={<IconCalendar />}
               label='REGISTER DATE'
               placeholder={account.registerDate}
               disabled
             />
-            <Button 
-              disabled={edit}
-              onClick={handleUpdateAccount}
-              fullWidth
-            >
-              Save Changes
-            </Button>
-          </Stack>
+            <TextInput 
+              label='ACTIVE'
+              placeholder='TRUE'
+              disabled
+            />
+          </Group>
+          <Button
+            onClick={update}
+            disabled={!edit}
+            fullWidth
+          >
+            Save Changes
+          </Button>
         </form>
       </Paper>
     </Stack>

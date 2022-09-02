@@ -5,8 +5,7 @@ import { useForm } from '@mantine/form';
 import { showNotification } from '@mantine/notifications';
 import { IconUser, IconLock } from '@tabler/icons';
 import { Logo } from '../Common/Logo';
-import { accountActions, appRoutes, useAppDispatch } from '../../app';
-import { usernameValidation, passwordValidation } from './LoginForm.validation';
+import { accountActions, appRoutes, useAppDispatch, loginValidation } from '../../app';
 import '../../styles/base-form.scss';
 
 const LoginForm = () => {
@@ -15,7 +14,10 @@ const LoginForm = () => {
   
   const form = useForm({
     initialValues: { username: '', password: '' },
-    validate: { username: usernameValidation, password: passwordValidation },
+    validate: {
+      username: loginValidation.username,
+      password: loginValidation.password,
+    },
   })
 
   const login = async () => {

@@ -5,8 +5,7 @@ import { useForm } from '@mantine/form';
 import { showNotification } from '@mantine/notifications';
 import { IconAt, IconUser, IconLock } from '@tabler/icons';
 import { Logo } from '../Common/Logo';
-import { confirmPasswordValidation, emailValidation, passwordValidation, usernameValidation  } from './RegisterForm.validation';
-import { accountAPI, appRoutes } from '../../app';
+import { accountAPI, appRoutes, registerValidation } from '../../app';
 import '../../styles/base-form.scss';
 
 const RegisterForm = () => {
@@ -14,7 +13,12 @@ const RegisterForm = () => {
 
   const form = useForm({
     initialValues: { email: '', username: '', password: '', confirmPassword: '' },
-    validate: { email: emailValidation, username: usernameValidation, password: passwordValidation, confirmPassword: confirmPasswordValidation }
+    validate: { 
+      email: registerValidation.email,
+      username: registerValidation.username, 
+      password: registerValidation.password,
+      confirmPassword: registerValidation.confirmPassword,
+    },
   })
 
   const register = async () => {

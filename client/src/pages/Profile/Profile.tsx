@@ -1,10 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Navigation, ProfileForm } from '../../components';
+import '../../styles/base-page.scss';
 
 const Profile = () => {
   return (
     <Navigation>
-      <ProfileForm />
+      <div className='main-container'>
+        <ProfileForm />
+      </div>
     </Navigation>
   )
 }
