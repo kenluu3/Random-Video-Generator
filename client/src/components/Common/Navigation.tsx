@@ -1,6 +1,5 @@
-import React, { KeyboardEvent, PropsWithChildren, SyntheticEvent, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { AppShell, Box, Burger, Divider, Header, Navbar, MediaQuery, Group, Stack, TextInput, Switch } from '@mantine/core';
+import React, { PropsWithChildren, useState } from 'react';
+import { AppShell, Burger, Divider, Header, Group, Navbar, MediaQuery, Stack } from '@mantine/core';
 import { IconHome2, IconStar, IconLogin, IconLogout, IconUser, IconSearch } from '@tabler/icons';
 import { Logo } from './Logo';
 import { ProfileCard } from './ProfileCard';
@@ -8,106 +7,44 @@ import { NavigationItem } from './NavigationItem';
 import { accountActions, appRoutes, useAppDispatch, useAppSelector } from '../../app';
 
 const Navigation = ({ children }: PropsWithChildren) => {
-  const navigate = useNavigate();
-  const [searchInput, setSearchInput] = useState('');
-  const [hiddenNavbar, setHiddenNavbar] = useState(false);
   const account = useAppSelector((state) => state.account);
   const dispatch = useAppDispatch();
+  const [showNav, setShowNav] = useState(false);
 
-  const handleLogout = () => {
-    dispatch(accountActions.accountLogout());
-  }
+  const logout = () => dispatch(accountActions.accountLogout());
+  const toggleNav = () => setShowNav(!showNav);
 
-  const handleSearchInputChange = (event: SyntheticEvent) => {
-    setSearchInput((event.target as HTMLInputElement).value);
-  }
-
-  const handleSearch = (event: KeyboardEvent) => {
-    if (searchInput && event.key === 'Enter') {
-      if (searchInput.length >= 5 && searchInput.length <= 25) {
-        setSearchInput('');
-        navigate(appRoutes.favorites.replace(':username', searchInput.toLowerCase()));
-      }
-    }
-  }
-  
   return (
     <AppShell
       navbarOffsetBreakpoint='sm'
       header={
         <Header height={65} p='xs'>
-          <Group>
+          <Group spacing={0} position='apart'>
             <MediaQuery largerThan='sm' styles={{ display: 'none' }}>
-              <Burger
-                size='sm'
-                opened={hiddenNavbar}
-                onClick={() => setHiddenNavbar(!hiddenNavbar)}
-                sx={{ marginRight: 'auto' }}
-              />
+              <Burger size='sm' opened={showNav} onClick={toggleNav} />
             </MediaQuery>
-            <Box sx={{ marginRight: 'auto' }}>
-              <Logo />
-            </Box>
-            <TextInput 
-              icon={<IconSearch />}
-              placeholder='Search user'
-              value={searchInput}
-              onChange={handleSearchInputChange}
-              onKeyDown={handleSearch}
-            />
+            <Logo />
           </Group>
         </Header>
       }
       navbar={
-        <Navbar 
-          width={{ base: 200 }}
-          p='lg' hiddenBreakpoint='sm'
-          hidden={!hiddenNavbar}
-        >
-          <Stack
-            sx={{ height: '100%' }}
-            justify='space-between'
-          >
-            <Navbar.Section>
-              <Stack
-                spacing='xs'
-              >
-                <NavigationItem 
-                  icon={<IconHome2 color={'skyblue'} size={26} />} 
-                  label='HOME' routeTo={appRoutes.home} 
-                />
-                { account.loggedIn &&
-                  <NavigationItem
-                    icon={<IconStar color={'gold'} size={26} />}
-                    label='FAVORITES' routeTo={appRoutes.favorites.replace(':username', account.username)}
-                  />
-                }
-                { account.loggedIn &&
-                  <NavigationItem 
-                    icon={<IconUser color={'lightblue'} size={26} />}
-                    label='PROFILE' routeTo={appRoutes.user.replace(':username', account.username)}
-                  />
-                }
-              </Stack>
-            </Navbar.Section>
-            <Navbar.Section>
+        <Navbar width={{ base: 200 }} hiddenBreakpoint='sm' hidden={!showNav} p='xl'>
+          <Stack justify='space-between' sx={{ height: '100%' }}>
+            <Stack>
+              <NavigationItem icon={<IconHome2 size={26} color={'black'} />} label='HOME' routeTo={appRoutes.home} />
+              { account.loggedIn && <NavigationItem icon={<IconStar color={'black'} size={26} />} label='FAVORITES' routeTo={appRoutes.favorites} /> }
+              { account.loggedIn && <NavigationItem icon={<IconUser color={'black'} size={26} />} label='PROFILE' routeTo={appRoutes.user.replace(':username', account.username)} />}
+            </Stack>
+            <Stack>
               { account.loggedIn &&
-                <Box onClick={handleLogout}>
-                  <NavigationItem
-                    icon={<IconLogout color={'red'} size={26} />}
-                    label='LOGOUT' routeTo={appRoutes.home}
-                  />
-                </Box>
+                <div onClick={logout}>
+                  <NavigationItem icon={<IconLogout color={'black'} size={26} />} label='LOGOUT' routeTo={appRoutes.home} />
+                </div>
               }
-              <Divider mt='md' mb='md'/>
-              { account.loggedIn
-                ? <ProfileCard username={account.username} />
-                : <NavigationItem
-                    icon={<IconLogin color={'lightgreen'} size={26} />}
-                    label='LOGIN' routeTo={appRoutes.login}
-                  />
-              }
-            </Navbar.Section>
+              <Divider />
+              { !account.loggedIn && <NavigationItem icon={<IconLogin size={26} color={'black'} />} label='LOGIN' routeTo={appRoutes.login} /> }
+              { account.loggedIn && <ProfileCard username={account.username} />}
+            </Stack>
           </Stack>
         </Navbar>
       }

@@ -7,18 +7,12 @@ interface ProfileCardProps {
 
 const ProfileCard = ({ username }: ProfileCardProps) => {
   return (
-    <Group>
-      <Avatar
-        color='teal'
-        variant='filled'
-        radius='xl'
-      >
+    <Group spacing='xs'>
+      <Avatar color='black' variant='filled' radius='xl'>
         {username.substring(0,2).toUpperCase()}
       </Avatar>
-      <Text 
-        weight={700} transform='uppercase'
-      >
-        {username}
+      <Text weight={700}>
+        {username.toUpperCase()}
       </Text>
     </Group>
   )

@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
 import { Group, Text } from '@mantine/core';
 import { Link } from 'react-router-dom';
+import '../../styles/base-link.scss';
 
 interface NavigationItemProps {
   icon: ReactNode,
@@ -8,14 +9,12 @@ interface NavigationItemProps {
   routeTo: string,
 }
 
-const NavigationItem = ({ icon, label, routeTo }: NavigationItemProps) => {
+const NavigationItem =({ icon, label, routeTo }: NavigationItemProps) => {
   return (
-    <Link to={routeTo} style={{ textDecoration: 'none' }}>
-      <Group spacing='sm'>
+    <Link to={routeTo} className='link'>
+      <Group spacing='xs'>
         {icon}
-        <Text weight={700}>
-          {label}
-        </Text>
+        <Text weight={700}>{label}</Text>
       </Group>
     </Link>
   )
