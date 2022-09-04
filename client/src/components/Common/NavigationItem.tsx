@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import { Group, Text } from '@mantine/core';
 import { Link } from 'react-router-dom';
-import '../../styles/base-link.scss';
+import '../../styles/link.scss';
 
 interface NavigationItemProps {
   icon: ReactNode,

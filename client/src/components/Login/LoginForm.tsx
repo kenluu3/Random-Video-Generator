@@ -6,7 +6,7 @@ import { showNotification } from '@mantine/notifications';
 import { IconUser, IconLock } from '@tabler/icons';
 import { Logo } from '../Common/Logo';
 import { accountActions, appRoutes, useAppDispatch, loginValidation } from '../../app';
-import '../../styles/base-form.scss';
+import '../../styles/form.scss';
 
 const LoginForm = () => {
   const navigate = useNavigate();

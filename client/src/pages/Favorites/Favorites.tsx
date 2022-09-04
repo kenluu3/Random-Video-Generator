@@ -3,7 +3,7 @@ import { Stack, Title } from '@mantine/core';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FavoriteTable, Navigation } from '../../components';
 import { appRoutes, favoriteAPI, useAppSelector } from '../../app';
-import '../../styles/base-page.scss';
+import '../../styles/page.scss';
 
 const Favorites = () => {
   const navigate = useNavigate();

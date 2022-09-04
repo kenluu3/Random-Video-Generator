@@ -6,7 +6,7 @@ import { showNotification } from '@mantine/notifications';
 import { IconAt, IconUser, IconLock } from '@tabler/icons';
 import { Logo } from '../Common/Logo';
 import { accountAPI, appRoutes, registerValidation } from '../../app';
-import '../../styles/base-form.scss';
+import '../../styles/form.scss';
 
 const RegisterForm = () => {
   const navigate = useNavigate();

@@ -4,7 +4,7 @@ import { MantineProvider } from '@mantine/core';
 import { NotificationsProvider } from '@mantine/notifications';
 import { Error, Favorites, Home, Login, Register, Profile } from '../pages';
 import { useAppSelector } from './store';
-import { baseTheme } from '../styles';
+import { theme } from '../styles';
 import { appRoutes } from './routes';
 
 const App = () => {
@@ -15,7 +15,7 @@ const App = () => {
       withGlobalStyles
       withNormalizeCSS
       withCSSVariables
-      theme={baseTheme}
+      theme={theme}
     >
       <NotificationsProvider position='top-center' zIndex={2088}>
         <BrowserRouter>

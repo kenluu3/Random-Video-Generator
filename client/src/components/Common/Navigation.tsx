@@ -1,6 +1,6 @@
 import React, { PropsWithChildren, useState } from 'react';
 import { AppShell, Burger, Divider, Header, Group, Navbar, MediaQuery, Stack } from '@mantine/core';
-import { IconHome2, IconStar, IconLogin, IconLogout, IconUser, IconSearch } from '@tabler/icons';
+import { IconHome2, IconStar, IconLogin, IconLogout, IconUser } from '@tabler/icons';
 import { Logo } from './Logo';
 import { ProfileCard } from './ProfileCard';
 import { NavigationItem } from './NavigationItem';

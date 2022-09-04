@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navigation, ProfileForm } from '../../components';
-import '../../styles/base-page.scss';
+import '../../styles/page.scss';
 
 const Profile = () => {
   return (

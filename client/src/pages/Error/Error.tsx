@@ -2,8 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import { Button, Stack, Text, Title } from '@mantine/core';
 import { appRoutes } from '../../app';
-
-import '../../styles/base-page.scss';
+import '../../styles/page.scss';
 
 const Error = () => {
   const navigate = useNavigate();

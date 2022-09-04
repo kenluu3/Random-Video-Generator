@@ -1,4 +1,4 @@
-const baseTheme = {
+const theme = {
   fontFamily: 'Roboto, sans-serif',
   fontSize: {
     xs: 12,
@@ -44,4 +44,4 @@ const baseTheme = {
   }
 }
 
-export { baseTheme };
+export { theme };

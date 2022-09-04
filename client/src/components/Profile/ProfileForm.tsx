@@ -4,7 +4,7 @@ import { useForm } from '@mantine/form';
 import { showNotification } from '@mantine/notifications';
 import { IconAt, IconCalendar, IconUser, IconLock } from '@tabler/icons';
 import { accountActions, useAppSelector, useAppDispatch, profileValidation } from '../../app';
-import '../../styles/base-form.scss';
+import '../../styles/form.scss';
 
 const ProfileForm = () => {
   const account = useAppSelector((state) => state.account);
