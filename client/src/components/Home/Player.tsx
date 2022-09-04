@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { SyntheticEvent } from 'react';
 import { Accordion, Anchor, AspectRatio, Button, Divider, Group, Stack, Text } from '@mantine/core';
 import { showNotification } from '@mantine/notifications';
 import { IconStar } from '@tabler/icons';
@@ -13,7 +13,9 @@ const Player = () => {
     return doc.documentElement.textContent;
   }
 
-  const saveFavorite = async () => {
+  const saveFavorite = async (event: SyntheticEvent) => {
+    event.stopPropagation();
+
     try {
       if (video) {
         const response = await favoriteAPI.add({ id: video.id, title: video.title, channel: video.channel, channelId: video.channelId });
