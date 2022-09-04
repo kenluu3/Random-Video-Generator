@@ -12,4 +12,32 @@
   height: 100%;
   width: 100%;
   padding: 5%;
+
+  &-home {
+    display: flex;
+    padding: 3%;
+    justify-content: space-between;
+
+    @media (max-width: 992px) {
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+  }
+}
+
+.player-container {
+  width: 65%;
+  margin-bottom: var(--mantine-spacing-md);
+
+  @media (max-width: 992px) {
+    width: 100%;
+  }
+}
+
+.tags-container {
+  width: 32%;
+
+  @media (max-width: 992px) {
+    width: 100%;
+  }
 }

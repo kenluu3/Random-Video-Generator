@@ -1,65 +1,64 @@
-import React, { SyntheticEvent, KeyboardEvent, useState } from 'react';
-import { Box, Button, Group, Stack, TextInput } from '@mantine/core';
-import { tagsActions, useAppDispatch, useAppSelector } from '../../app';
-import { IconPlus, IconClearAll, IconFilter } from '@tabler/icons';
+import React, { KeyboardEvent, SyntheticEvent, useState } from 'react';
+import { Button, Group, Stack, TextInput } from '@mantine/core';
+import { IconPlayerPlay, IconPlus, IconClearAll, IconFilter } from '@tabler/icons';
 import { TagItem } from './TagItem';
+import { tagsActions, useAppDispatch, useAppSelector, videoActions } from '../../app';
 
 const TagsContainer = () => {
-  const dispatch = useAppDispatch();
   const tags = useAppSelector((state) => state.tags);
+  const dispatch = useAppDispatch();
   const [tagInput, setTagInput] = useState('');
 
-  const handleTagInputChange = (event: SyntheticEvent) => {
-    setTagInput((event.target as HTMLInputElement).value);
+  const tagChange = (event: SyntheticEvent<HTMLInputElement>) => setTagInput(event.currentTarget.value);
+
+  const tagKeyboardSubmit = (event: KeyboardEvent) => {
+    if (event.key === 'Enter') tagSave();
   }
 
-  const handleTagSubmit = (event: KeyboardEvent) => {
-    if (tagInput && event.key === 'Enter') {
-      dispatch(tagsActions.addTag(tagInput));
-      setTagInput('');
-    }
-  }
-
-  const handleTagAdd = () => {
+  const tagSave = () => {
     if (tagInput) {
-      dispatch(tagsActions.addTag(tagInput));
+      dispatch(tagsActions.addTag(tagInput))
       setTagInput('');
     }
   }
 
-  const handleClearTag = () => {
-    dispatch(tagsActions.clearTags());
-  }
+  const tagsClear = () => dispatch(tagsActions.clearTags());
 
+  const tagItems = tags.map((label, i) => <TagItem key={i} id={i} label={label} />);
+
+  const playVideo = () => dispatch(videoActions.retrieveVideo(tags));
+  
   return (
-    <Stack spacing='xs'>
+    <Stack spacing={5} sx={{ width: '100%', height: '100%' }}>
+      <Button leftIcon={<IconPlayerPlay size={18} />} onClick={playVideo}>
+        Generate Video
+      </Button>
       <TextInput
         icon={<IconFilter />}
-        value={tagInput}
-        variant='filled'
         placeholder='Add tags to narrow results'
-        onChange={handleTagInputChange}
-        onKeyDown={handleTagSubmit}
+        value={tagInput}
+        onChange={tagChange}
+        onKeyDown={tagKeyboardSubmit}
       />
       <Group position='apart'>
         <Button
-          rightIcon={<IconClearAll stroke={1} />}
           variant='subtle'
-          onClick={handleClearTag}
+          onClick={tagsClear}
+          leftIcon={<IconClearAll size={18} />}
+          compact
         >
           Clear
         </Button>
         <Button
-          rightIcon={<IconPlus stroke={1} />}
           variant='subtle'
-          onClick={handleTagAdd}
+          onClick={tagSave}
+          leftIcon={<IconPlus size={18} />}
+          compact
         >
           Add
         </Button>
       </Group>
-      <Box>
-        {tags.map((label, i) => <TagItem key={i} id={i} label={label} />)}
-      </Box>
+      <div className='tag-container'>{tagItems}</div>
     </Stack>
   )
 }

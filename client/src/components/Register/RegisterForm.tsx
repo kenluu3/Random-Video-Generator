@@ -8,7 +8,7 @@ import { Logo } from '../Common/Logo';
 import { accountAPI, appRoutes, registerValidation } from '../../app';
 import '../../styles/form.scss';
 
-const RegisterForm = () => {
+const   RegisterForm = () => {
   const navigate = useNavigate();
 
   const form = useForm({

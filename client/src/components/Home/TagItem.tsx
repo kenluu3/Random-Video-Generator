@@ -1,7 +1,7 @@
 import React from 'react';
-import { Button } from '@mantine/core';
-import { IconX } from '@tabler/icons';
+import { CloseButton, Group, Text } from '@mantine/core';
 import { tagsActions, useAppDispatch } from '../../app';
+import '../../styles/tags.scss';
 
 interface TagItemProps {
   id: number,
@@ -11,19 +11,13 @@ interface TagItemProps {
 const TagItem = ({ id, label }: TagItemProps) => {
   const dispatch = useAppDispatch();
 
-  const handleRemoveTag = () => {
-    dispatch(tagsActions.removeTag(id));
-  }
+  const remove = () => dispatch(tagsActions.removeTag(id));
 
   return (
-    <Button
-      m={5}
-      variant='outline'
-      rightIcon={<IconX size={18} color={'red'} />}
-      onClick={handleRemoveTag}
-    >
-      {label}
-    </Button>
+    <Group spacing={0} className='tag-item'>
+      <Text>{label}</Text>
+      <CloseButton onClick={remove}/>
+    </Group>
   )
 }
 

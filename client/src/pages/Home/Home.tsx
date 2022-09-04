@@ -1,67 +1,27 @@
 import React, { useEffect } from 'react';
-import { Box, Button, Stack } from '@mantine/core';
+import { useAppDispatch, useAppSelector, videoActions } from '../../app';
 import { Navigation, Player, TagsContainer } from '../../components';
-import { IconPlayerPlay } from '@tabler/icons';
-import { videoActions, useAppDispatch, useAppSelector } from '../../app';
+import '../../styles/page.scss';
 
 const Home = () => {
-  const dispatch = useAppDispatch();
-  const tags = useAppSelector((state) => state.tags);
   const video = useAppSelector((state) => state.video);
-
-  const handleGenerate = () => {
-    dispatch(videoActions.retrieveVideo(tags));
-  }
+  const tags = useAppSelector((state) => state.tags);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (!video.id) {
-      dispatch(videoActions.retrieveVideo(tags));
-    }
+    if (!video.id) dispatch(videoActions.retrieveVideo(tags));
   }, [])
 
   return (
     <Navigation>
-      <Box
-        sx={{
-          width: '100%',
-          height: '100%',
-          display: 'flex',
-          justifyContent: 'space-between',
-
-          '@media (max-width: 768px)': {
-            flexDirection: 'column',
-            justifyContent: 'flex-start'
-          }
-        }}
-      >
-        <Box
-          sx={{
-            width: '70%',
-            '@media (max-width: 768px)': {
-              width: '100%',
-              marginBottom: '12px',
-            }
-          }}
-        >
+      <div className='main-container-home'>
+        <div className='player-container'>
           <Player />
-        </Box>
-        <Stack
-          sx={{
-            width: '29%',
-            '@media (max-width: 768px)': {
-              width: '100%',
-            }
-          }}
-        >
-          <Button
-            rightIcon={<IconPlayerPlay stroke={1} />}
-            onClick={handleGenerate}
-          >
-            Generate Video
-          </Button>
+        </div>
+        <div className='tags-container'>
           <TagsContainer />
-        </Stack>
-      </Box>
+        </div>
+      </div>
     </Navigation>
   )
 }
