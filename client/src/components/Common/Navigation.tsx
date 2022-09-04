@@ -1,5 +1,6 @@
 import React, { PropsWithChildren, useState } from 'react';
 import { AppShell, Burger, Divider, Header, Group, Navbar, MediaQuery, Stack } from '@mantine/core';
+import { showNotification } from '@mantine/notifications';
 import { IconHome2, IconStar, IconLogin, IconLogout, IconUser } from '@tabler/icons';
 import { Logo } from './Logo';
 import { ProfileCard } from './ProfileCard';
@@ -11,7 +12,11 @@ const Navigation = ({ children }: PropsWithChildren) => {
   const dispatch = useAppDispatch();
   const [showNav, setShowNav] = useState(false);
 
-  const logout = () => dispatch(accountActions.accountLogout());
+  const logout = async () => {
+    const response = await dispatch(accountActions.accountLogout());
+    showNotification({ message: response.payload.message, autoClose: 2000 });
+  }
+
   const toggleNav = () => setShowNav(!showNav);
 
   return (
@@ -33,7 +38,7 @@ const Navigation = ({ children }: PropsWithChildren) => {
             <Stack>
               <NavigationItem icon={<IconHome2 size={26} color={'black'} />} label='HOME' routeTo={appRoutes.home} />
               { account.loggedIn && <NavigationItem icon={<IconStar color={'black'} size={26} />} label='FAVORITES' routeTo={appRoutes.favorites.replace(':username', account.username)} /> }
-              { account.loggedIn && <NavigationItem icon={<IconUser color={'black'} size={26} />} label='PROFILE' routeTo={appRoutes.user.replace(':username', account.username)} />}
+              { account.loggedIn && <NavigationItem icon={<IconUser color={'black'} size={26} />} label='PROFILE' routeTo={appRoutes.user} />}
             </Stack>
             <Stack>
               { account.loggedIn &&
