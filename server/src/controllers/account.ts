@@ -136,4 +136,10 @@ const loginAccount = async (req: Request, res: Response) => {
   }
 }
 
-export { getAccount, registerAccount, loginAccount, updateAccount };
+const logoutAccount = async (req: Request, res: Response) => {
+  return res.status(200)
+  .cookie('token', '', { httpOnly: true, secure: false })
+  .json({ message: 'Logged out successfully' });
+}
+
+export { getAccount, registerAccount, loginAccount, logoutAccount, updateAccount };

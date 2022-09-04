@@ -16,6 +16,7 @@ const apiRoutes = {
   account: {
     get: '/account',
     login: '/account/login',
+    logout: '/account/logout',
     register: '/account/register',
     update: '/account/update',
   },

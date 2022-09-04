@@ -12,6 +12,9 @@ const accountAPI = {
   },
   get: (username: string) => {
     return apiClient.get(`${apiRoutes.account.get}/${username}`);
+  },
+  logout: () => {
+    return apiClient.delete(apiRoutes.account.logout);
   }
 }
 

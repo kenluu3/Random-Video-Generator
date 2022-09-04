@@ -30,14 +30,18 @@ const accountUpdate = createAsyncThunk(
   }
 )
 
+const accountLogout = createAsyncThunk(
+  'account/accountLogout',
+  async () => {
+    const response = await accountAPI.logout();
+    return response.data;
+  }
+)
+
 const accountSlice = createSlice({
   name: 'account',
   initialState,
-  reducers: {
-    accountLogout: () => {
-      return {loading: false, loggedIn: false, username: '', email: '', active: false, registerDate: ''}
-    }
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(accountLogin.pending, (state) => {
       return {...state, loading: true };
@@ -51,10 +55,13 @@ const accountSlice = createSlice({
     }),
     builder.addCase(accountUpdate.fulfilled, (state, action) => {
       const { username, email } = action.payload.user;
-      return {...state, username: username, email: email }
+      return {...state, username: username, email: email };
+    }),
+    builder.addCase(accountLogout.fulfilled, (state, action) => {
+      return {loading: false, loggedIn: false, username: '', email: '', active: false, registerDate: ''};
     })
   }
 })
 
 export const accountReducer = accountSlice.reducer;
-export const accountActions = { ...accountSlice.actions, accountLogin, accountUpdate };
+export const accountActions = { ...accountSlice.actions, accountLogin, accountUpdate, accountLogout };
