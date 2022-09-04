@@ -5,6 +5,7 @@ import { IconHome2, IconStar, IconLogin, IconLogout, IconUser } from '@tabler/ic
 import { Logo } from './Logo';
 import { ProfileCard } from './ProfileCard';
 import { NavigationItem } from './NavigationItem';
+import { Searchbar } from './Searchbar';
 import { accountActions, appRoutes, useAppDispatch, useAppSelector } from '../../app';
 
 const Navigation = ({ children }: PropsWithChildren) => {
@@ -29,6 +30,7 @@ const Navigation = ({ children }: PropsWithChildren) => {
               <Burger size='sm' opened={showNav} onClick={toggleNav} />
             </MediaQuery>
             <Logo />
+            <Searchbar />
           </Group>
         </Header>
       }

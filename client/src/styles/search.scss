@@ -1,0 +1,35 @@
+.search-bar {
+  display: flex;
+  justify-content: center;
+  height: 32px;
+  padding: 1px;
+
+  &-input {    
+    width: 0;
+
+    .mantine-TextInput-input	{
+      min-height: 28px;
+      height: 28px;
+      outline: 0;
+      border: 0;
+    }
+  }
+
+  &-icon {
+    border: 1px solid var(--mantine-color-gray-4);
+  }
+}
+
+.search-bar:hover {
+  border: 1px solid var(--mantine-color-gray-4);
+  border-radius: var(--mantine-radius-xl);
+
+  .search-bar-icon {
+    border: 0;
+  }
+
+  .search-bar-input {
+    width: 220px;
+    transition: width 0.5s;
+  }
+}
