@@ -4,36 +4,40 @@ import { FavoriteItem } from './FavoriteItem';
 
 interface FavoriteTableProps {
   favorites: any[],
-  viewSelf: boolean,
+  selfView: boolean,
 }
 
-const FavoriteTable = ({ favorites, viewSelf }: FavoriteTableProps) => {
+const elements = [
+  { position: 6, mass: 12.011, symbol: 'C', name: 'Carbon' },
+  { position: 7, mass: 14.007, symbol: 'N', name: 'Nitrogen' },
+  { position: 39, mass: 88.906, symbol: 'Y', name: 'Yttrium' },
+  { position: 56, mass: 137.33, symbol: 'Ba', name: 'Barium' },
+  { position: 58, mass: 140.12, symbol: 'Ce', name: 'Cerium' },
+];
+
+const FavoriteTable = ({ favorites, selfView }: FavoriteTableProps) => {
+  const favoriteItems = favorites.map(({ id, title, channel, channelId, saveDate }, i) => 
+    <FavoriteItem key={i} id={id} title={title} channel={channel} channelId={channelId} date={saveDate} selfView={selfView} />
+  )
+
   return (
-    <Paper p='md'>
-      <Table highlightOnHover horizontalSpacing='md'>
+    <Paper>
+      <Table highlightOnHover>
         <thead>
           <tr>
-            <td>
-              <Text weight={700} size={20}>TITLE</Text>
-            </td>
-            <td>
-              <Text weight={700} size={20}>CHANNEL</Text>
-            </td>
-            <td>
-              <Text weight={700} size={20}>DATE</Text>
-            </td>
+            <th>
+              <Text>TITLE</Text>
+            </th>
+            <th>
+              <Text>CHANNEL</Text>
+            </th>
+            <th>
+              <Text>SAVE DATE</Text>
+            </th>
           </tr>
         </thead>
         <tbody>
-          {favorites.map(({ id, title, channel, channelId, saveDate }, i) => 
-            <FavoriteItem 
-              key={i}
-              id={id} title={title}
-              channel={channel} channelId={channelId}
-              date={saveDate}
-              viewSelf={viewSelf}
-            />
-          )}
+          {favoriteItems}
         </tbody>
       </Table>
     </Paper>

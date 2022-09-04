@@ -1,5 +1,6 @@
 import React from 'react';
 import { Anchor, CloseButton } from '@mantine/core';
+import { showNotification } from '@mantine/notifications';
 import { favoriteAPI } from '../../app';
 
 interface FavoriteItemProps {
@@ -8,18 +9,18 @@ interface FavoriteItemProps {
   channel: string,
   channelId: string,
   date: string,
-  viewSelf: boolean
+  selfView: boolean
 }
 
-const FavoriteItem = ({ id, title, channel, channelId, date, viewSelf }: FavoriteItemProps) => {
-  const handleRemoveFavorite = async () => {
+const FavoriteItem = ({ id, title, channel, channelId, date, selfView }: FavoriteItemProps) => {
+  const remove = async () => {
     try {
-      const response = await favoriteAPI.remove(id);
+      await favoriteAPI.remove(id);
     } catch (error: any) {
-      console.log(error);
+      showNotification({ message: 'Server error, failed to remove from favorites', autoClose: 2000 });
     }
   }
-
+  
   return (
     <tr>
       <td>
@@ -35,11 +36,7 @@ const FavoriteItem = ({ id, title, channel, channelId, date, viewSelf }: Favorit
       <td>
         {date}
       </td>
-      { viewSelf && 
-        <td>
-          <CloseButton onClick={handleRemoveFavorite} />
-        </td>
-      }
+      { selfView && <td><CloseButton onClick={remove} /></td> }
     </tr>
   )
 }

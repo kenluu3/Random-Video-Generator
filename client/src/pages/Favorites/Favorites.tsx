@@ -1,36 +1,33 @@
-import React, { useState, useEffect } from 'react';
-import { Stack, Divider, Text } from '@mantine/core';
+import React, { useEffect, useState } from 'react';
+import { Stack, Title } from '@mantine/core';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FavoriteTable, Navigation } from '../../components';
-import { appRoutes, useAppSelector, favoriteAPI } from '../../app';
+import { appRoutes, favoriteAPI, useAppSelector } from '../../app';
+import '../../styles/base-page.scss';
 
 const Favorites = () => {
-  const { username } = useParams();
   const navigate = useNavigate();
-  
-  const [favorites, setFavorites] = useState<any>([]);
+  const { username } = useParams();
+
   const account = useAppSelector((state) => state.account);
-  const viewSelf = account.loggedIn && username?.toLowerCase() === account.username;
+  const [favorites, setFavorites] = useState<any[]>([]);
 
   useEffect(() => {
     if (username) {
       favoriteAPI.get(username)
         .then((values) => setFavorites(values.data))
-        .catch(() => navigate(appRoutes.home));
-    } else {
-      navigate(appRoutes.home)
+        .catch(() => navigate(appRoutes.error))
     }
-  }, [username, favorites])
+  }, [favorites])
 
   return (
     <Navigation>
-      <Stack p={80}>
-        <Text size={32} weight={700} transform='uppercase'>
-          {username} Favorites
-        </Text>
-        <Divider size='sm' />
-        <FavoriteTable favorites={favorites} viewSelf={viewSelf} />
-      </Stack>
+      <div className='main-container'>
+        <Stack>
+          <Title order={1}>{username?.toUpperCase()} FAVORITES LIST</Title>
+          <FavoriteTable favorites={favorites} selfView={account.username === username?.toLowerCase()} />
+        </Stack>
+      </div>
     </Navigation>
   )
 }
