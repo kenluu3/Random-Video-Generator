@@ -32,7 +32,7 @@ const Navigation = ({ children }: PropsWithChildren) => {
           <Stack justify='space-between' sx={{ height: '100%' }}>
             <Stack>
               <NavigationItem icon={<IconHome2 size={26} color={'black'} />} label='HOME' routeTo={appRoutes.home} />
-              { account.loggedIn && <NavigationItem icon={<IconStar color={'black'} size={26} />} label='FAVORITES' routeTo={appRoutes.favorites} /> }
+              { account.loggedIn && <NavigationItem icon={<IconStar color={'black'} size={26} />} label='FAVORITES' routeTo={appRoutes.favorites.replace(':username', account.username)} /> }
               { account.loggedIn && <NavigationItem icon={<IconUser color={'black'} size={26} />} label='PROFILE' routeTo={appRoutes.user.replace(':username', account.username)} />}
             </Stack>
             <Stack>

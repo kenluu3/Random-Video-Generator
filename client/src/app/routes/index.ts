@@ -4,6 +4,7 @@ const appRoutes = {
   register: '/register',
   user: '/user/:username',
   favorites: '/user/:username/favorites',
+  error: '*'
 }
 
 export { appRoutes };

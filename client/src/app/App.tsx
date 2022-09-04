@@ -25,7 +25,7 @@ const App = () => {
             <Route path={appRoutes.register} element={<Register />} />
             <Route path={appRoutes.favorites} element={<Favorites />} />
             <Route path={appRoutes.user} element={account.loggedIn ? <Profile /> : <Error />} />
-            <Route path={'*'} element={<Error />} />
+            <Route path={appRoutes.error} element={<Error />} />
           </Routes>
         </BrowserRouter>
       </NotificationsProvider>
