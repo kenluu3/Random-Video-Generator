@@ -1,7 +1,8 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Anchor, CloseButton } from '@mantine/core';
 import { showNotification } from '@mantine/notifications';
-import { favoriteAPI } from '../../app';
+import { appRoutes, accountActions, favoriteAPI, useAppDispatch } from '../../app';
 
 interface FavoriteItemProps {
   id: string,
@@ -13,11 +14,20 @@ interface FavoriteItemProps {
 }
 
 const FavoriteItem = ({ id, title, channel, channelId, date, selfView }: FavoriteItemProps) => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   const remove = async () => {
     try {
       await favoriteAPI.remove(id);
     } catch (error: any) {
-      showNotification({ message: 'Server error, failed to remove from favorites', autoClose: 2000 });
+      if (error.response.status === 401) {
+        showNotification({ message: error.response.data, autoClose: 2000 });
+        dispatch(accountActions.accountReset());
+        navigate(appRoutes.login);
+      } else {
+        showNotification({ message: 'Server error, failed to remove from favorites', autoClose: 2000 });
+      }
     }
   }
   

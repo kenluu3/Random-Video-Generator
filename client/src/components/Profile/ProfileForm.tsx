@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button, Group, Paper, PasswordInput, Stack, Switch, Title, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { showNotification } from '@mantine/notifications';
 import { IconAt, IconCalendar, IconUser, IconLock } from '@tabler/icons';
-import { accountActions, useAppSelector, useAppDispatch, profileValidation } from '../../app';
+import { accountActions, appRoutes, useAppSelector, useAppDispatch, profileValidation } from '../../app';
 import '../../styles/form.scss';
 
 const ProfileForm = () => {
   const account = useAppSelector((state) => state.account);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [edit, setEdit] = useState(false);
 
   const form = useForm({ 
@@ -40,10 +42,16 @@ const ProfileForm = () => {
         if (accountActions.accountUpdate.rejected.match(response)) {
           const error = response.payload as any;
 
-          if (error.param === 'username')
-            form.setFieldError('username', error.msg);
-          if (error.param === 'email')
-            form.setFieldError('email', error.msg);
+          if (error === 'Unauthorized') {
+            showNotification({ message: error.response.data, autoClose: 2000 });
+            dispatch(accountActions.accountReset());
+            navigate(appRoutes.login);
+          } else {
+            error.error.forEach((err: any) => {
+              if (err.param === 'username') form.setFieldError('username', err.msg);
+              if (err.param === 'email') form.setFieldError('email', err.msg);
+            })
+          }
         } else {
           showNotification({ message: response.payload.message, autoClose: 2000 });
           setEdit(!edit);

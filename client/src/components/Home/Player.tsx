@@ -1,12 +1,15 @@
 import React, { SyntheticEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Accordion, Anchor, AspectRatio, Button, Divider, Group, Stack, Text } from '@mantine/core';
 import { showNotification } from '@mantine/notifications';
 import { IconStar } from '@tabler/icons';
-import { useAppSelector, favoriteAPI } from '../../app';
+import { appRoutes, useAppDispatch, useAppSelector, favoriteAPI, accountActions } from '../../app';
 
 const Player = () => {
   const account = useAppSelector((state) => state.account);
   const video = useAppSelector((state) => state.video);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const htmlDecode = (input: string) => {
     let doc = new DOMParser().parseFromString(input, 'text/html');
@@ -22,7 +25,13 @@ const Player = () => {
         showNotification({ message: response.data.message, autoClose: 2000 });
       }
     } catch (error: any) {
-      showNotification({ message: error.response.data.message, autoClose: 2000 });
+      if (error.response.status === 401) {
+        showNotification({ message: error.response.data, autoClose: 2000 });
+        dispatch(accountActions.accountReset());
+        navigate(appRoutes.login);
+      } else {
+        showNotification({ message: error.response.data.message, autoClose: 2000 });
+      }
     }
   }
 

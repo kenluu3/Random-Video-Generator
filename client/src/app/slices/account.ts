@@ -25,7 +25,7 @@ const accountUpdate = createAsyncThunk(
       const response = await accountAPI.update(payload);
       return response.data;
     } catch (error: any) {
-      return rejectWithValue(error.response.data.error[0]);
+      return rejectWithValue(error.response.data);
     }
   }
 )
@@ -41,7 +41,11 @@ const accountLogout = createAsyncThunk(
 const accountSlice = createSlice({
   name: 'account',
   initialState,
-  reducers: {},
+  reducers: {
+    accountReset: (state) => {
+      return {...state, loading: false, loggedIn: false, username: '', email: '', active: false, registerDate: ''};
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(accountLogin.pending, (state) => {
       return {...state, loading: true };
@@ -58,7 +62,7 @@ const accountSlice = createSlice({
       return {...state, username: username, email: email };
     }),
     builder.addCase(accountLogout.fulfilled, (state, action) => {
-      return {loading: false, loggedIn: false, username: '', email: '', active: false, registerDate: ''};
+      return {...state, loading: false, loggedIn: false, username: '', email: '', active: false, registerDate: ''};
     })
   }
 })
