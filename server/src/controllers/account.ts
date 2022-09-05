@@ -89,7 +89,7 @@ const updateAccount = async (req: Request, res: Response) => {
     const token = generateToken(newPayload);
 
     return res.status(200)
-    .cookie('token', token, { httpOnly: true, secure: false })
+    .cookie('token', token, { httpOnly: true, secure: true })
     .json({ message: 'Updated account information successfully', user: newPayload });
   } catch (error: any) {
     return res.status(500).json({ error: 'Internal Server Error' });
@@ -129,7 +129,7 @@ const loginAccount = async (req: Request, res: Response) => {
     const token = generateToken(payload)
 
     return res.status(200)
-      .cookie('token', token, { httpOnly: true, secure: false })
+      .cookie('token', token, { httpOnly: true, secure: true })
       .json({ message: 'Logged in successfully', user: payload });
   } catch (error: any) {
     return res.status(500).json({ error: 'Internal Server Error' });
@@ -138,7 +138,7 @@ const loginAccount = async (req: Request, res: Response) => {
 
 const logoutAccount = async (req: Request, res: Response) => {
   return res.status(200)
-  .cookie('token', '', { httpOnly: true, secure: false })
+  .cookie('token', '', { httpOnly: true, secure: true })
   .json({ message: 'Logged out successfully' });
 }
 

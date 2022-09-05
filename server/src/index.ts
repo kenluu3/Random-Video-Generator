@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
-import express from 'express';
+import express, { Request, Response } from 'express';
+import path from 'path';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import { dataSource } from './config';
@@ -9,10 +10,7 @@ import { accountRouter, videoRouter, favoriteRouter } from './routes';
 const port = process.env.PORT || 8080;
 const app = express();
 
-app.use(cors({
-  origin: ['http://localhost:3000'],
-  credentials: true,
-}));
+app.use(cors({ credentials: true }));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -28,6 +26,11 @@ dataSource.initialize()
     console.log(`Initialized application data source.`);
   })
   .catch((error) => console.error(`Appliciation data source initialization error: ${error}`));
+
+app.use(express.static('../client/dist'));
+app.get('*', (req: Request, res: Response) => {
+  res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+});
 
 app.listen(port, () => {
   console.log(`Server started listening on port: ${port}`);
