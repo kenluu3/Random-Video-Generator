@@ -23,7 +23,10 @@ app.use('/video', videoRouter);
 app.use('/favorite', favoriteRouter);
 
 dataSource.initialize()
-  .then(() => console.log(`Initialized application data source.`))
+  .then(async (value) => {
+    await value.runMigrations();
+    console.log(`Initialized application data source.`);
+  })
   .catch((error) => console.error(`Appliciation data source initialization error: ${error}`));
 
 app.listen(port, () => {

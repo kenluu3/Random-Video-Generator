@@ -1,15 +1,18 @@
+import dotenv from 'dotenv';
+dotenv.config();
 import { DataSource } from 'typeorm';
 import { Account, Favorite } from '../models';
 
 const dataSource = new DataSource({
   type: 'postgres',
-  host: process.env.PGHOST,
-  username: process.env.PGUSER,
-  password: process.env.PGPASSWORD,
-  port: Number(process.env.PGPORT),
-  database: process.env.PGDATABASE,
-  synchronize: true,
+  host: process.env.DB_HOST,
+  username: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  port: Number(process.env.DB_PORT),
+  database: process.env.DB_DATABASE,
+  synchronize: false,
   entities: [Account, Favorite],
+  migrations: ['src/migrations/*.ts']
 });
 
 export { dataSource };
