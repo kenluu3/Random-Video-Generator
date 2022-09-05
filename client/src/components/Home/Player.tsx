@@ -1,6 +1,6 @@
 import React, { SyntheticEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Accordion, Anchor, AspectRatio, Button, Divider, Group, Stack, Text } from '@mantine/core';
+import { Anchor, AspectRatio, Button, Card, Divider, Group, Text } from '@mantine/core';
 import { showNotification } from '@mantine/notifications';
 import { IconStar } from '@tabler/icons';
 import { appRoutes, useAppDispatch, useAppSelector, favoriteAPI, accountActions } from '../../app';
@@ -36,7 +36,7 @@ const Player = () => {
   }
 
   return (
-    <Stack spacing='xs' sx={{ height: '100%', width: '100%' }}>
+    <Card p='xs'>
       <AspectRatio ratio={16/9}>
         <iframe
           src={`https://www.youtube.com/embed/${video.id}`}
@@ -45,35 +45,29 @@ const Player = () => {
           allowFullScreen
         />
       </AspectRatio>
-      <Accordion variant='contained'>
-        <Accordion.Item value='title'>
-          <Accordion.Control>
-            <Group position='apart'>
-              <Text weight={700}>{htmlDecode(video.title)}</Text>
-              { account.loggedIn &&
-                <Button
-                  leftIcon={<IconStar />}
-                  onClick={saveFavorite}
-                  variant='subtle'
-                  compact
-                >
-                  Add to Favorites
-                </Button>
-              }
-            </Group>
-          </Accordion.Control>
-          <Accordion.Panel>
-            <Stack spacing='xs' p='xs'>
-              <Anchor href={`https://www.youtube.com/c/${video.channelId}`}>
-                <Text>{htmlDecode(video.channel)}</Text>
-              </Anchor>
-              <Divider />
-              <Text>{htmlDecode(video.description)}</Text>
-            </Stack>
-          </Accordion.Panel>
-        </Accordion.Item>
-      </Accordion>
-    </Stack>
+      <Group position="apart" mt="md" mb="xs">
+        <Text weight={700}>{htmlDecode(video.title)}</Text>
+        { account.loggedIn &&
+          <Button
+            leftIcon={<IconStar />}
+            onClick={saveFavorite}
+            variant='subtle'
+            compact
+          >
+            Add to Favorites
+          </Button>
+        }
+      </Group>
+      <Divider mb='sm' mt='sm' />
+      <Anchor href={`https://www.youtube.com/channel/${video.channelId}`}>
+        <Text weight={500}>
+          {htmlDecode(video.channel)}
+        </Text>
+      </Anchor>
+      <Text size='sm' color='dimmed'>
+        {htmlDecode(video.description)}
+      </Text>
+    </Card>
   )
 }
 
