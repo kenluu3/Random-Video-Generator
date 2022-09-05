@@ -74,7 +74,7 @@ const removeFavorite = async (req: Request, res: Response) => {
 
     await favorite.remove();
 
-    return res.status(200).json({ message: 'Removed from favorites successfully' });
+    return res.status(200).json({ message: 'Removed from favorites successfully', id: id });
   } catch (error: any) {
     return res.status(500).json({ error: 'Internal Server Error' });
   }

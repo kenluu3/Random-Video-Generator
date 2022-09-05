@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { Dispatch } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Anchor, CloseButton } from '@mantine/core';
 import { showNotification } from '@mantine/notifications';
-import { appRoutes, accountActions, favoriteAPI, useAppDispatch } from '../../app';
+import { appRoutes, accountActions, useAppDispatch, favoritesActions } from '../../app';
 
 interface FavoriteItemProps {
   id: string,
@@ -10,7 +10,7 @@ interface FavoriteItemProps {
   channel: string,
   channelId: string,
   date: string,
-  selfView: boolean
+  selfView: boolean,
 }
 
 const FavoriteItem = ({ id, title, channel, channelId, date, selfView }: FavoriteItemProps) => {
@@ -18,15 +18,15 @@ const FavoriteItem = ({ id, title, channel, channelId, date, selfView }: Favorit
   const navigate = useNavigate();
 
   const remove = async () => {
-    try {
-      await favoriteAPI.remove(id);
-    } catch (error: any) {
-      if (error.response.status === 401) {
-        showNotification({ message: error.response.data, autoClose: 2000 });
+    const response = await dispatch(favoritesActions.removeFavorite(id));
+
+    if (favoritesActions.removeFavorite.rejected.match(response)) {
+      const error = response.payload as string;
+      
+      showNotification({ message: error, autoClose: 2000 });
+      if (error === 'Unauthorized') {
         dispatch(accountActions.accountReset());
         navigate(appRoutes.login);
-      } else {
-        showNotification({ message: 'Server error, failed to remove from favorites', autoClose: 2000 });
       }
     }
   }
