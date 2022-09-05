@@ -18,7 +18,7 @@ const Favorites = () => {
     if (username) {
       setTimeout(() => {
         dispatch(favoritesActions.retrieveFavorites(username)).unwrap()
-        .then(() => setLoading(!loading))
+        .then(() => setLoading(false))
         .catch(() => navigate(appRoutes.error));
       }, 100)
     }
