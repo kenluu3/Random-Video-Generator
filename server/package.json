@@ -7,7 +7,8 @@
     "serve": "nodemon src/index.ts",
     "typeorm": "typeorm-ts-node-esm -d ./src/config/data-source.ts",
     "generate-migrations": "npm run typeorm migration:generate -- src/migrations/migration -p",
-    "build": "npm run generate-migrations && tsc"
+    "build": "npm run generate-migrations && tsc -p .",
+    "prod": "ts-node dist/index.js"
   },
   "keywords": [
     "random",
