@@ -5,9 +5,9 @@
   "scripts": {
     "start": "npm run build && npm run serve",
     "serve": "nodemon src/index.ts",
-    "build": "tsc",
     "typeorm": "typeorm-ts-node-esm -d ./src/config/data-source.ts",
-    "generate-migrations": "npm run typeorm migration:generate -- src/migrations/migration -p"
+    "generate-migrations": "npm run typeorm migration:generate -- src/migrations/migration -p",
+    "build": "npm run generate-migrations && tsc"
   },
   "keywords": [
     "random",
