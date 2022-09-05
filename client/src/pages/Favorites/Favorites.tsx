@@ -13,6 +13,8 @@ const Favorites = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
+
     if (username) {
       setTimeout(() => {
         dispatch(favoritesActions.retrieveFavorites(username)).unwrap()
