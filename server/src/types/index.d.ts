@@ -5,6 +5,6 @@ declare namespace Express {
     password: string,
     email: string,
     active: boolean,
-    saveDate: string,
+    createDate: string,
   }
 }
