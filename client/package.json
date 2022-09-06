@@ -4,6 +4,7 @@
   "description": "Random video generator web client",
   "scripts": {
     "build": "webpack",
+    "build-prod": "NODE_ENV=production webpack --config ./webpack.production.config.js",
     "dev": "node --max-old-space-size=8192 node_modules/webpack/bin/webpack.js serve"
   },
   "keywords": [
