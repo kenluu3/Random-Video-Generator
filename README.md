@@ -13,7 +13,7 @@ This application is built with the following tools in TypeScript:
 ### Back-end
 * [Node](https://nodejs.dev/)
 * [Express](https://expressjs.com/)
-* [PostgreSQL](Postgresql.org)
+* [PostgreSQL](https://www.postgresql.org/)
 * [TypeORM](https://typeorm.io/)
 
 ## Running the Application Locally
